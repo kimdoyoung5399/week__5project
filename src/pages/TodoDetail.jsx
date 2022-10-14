@@ -26,7 +26,7 @@ const TodoDetail = () => {
         </TodoDetailBtn>
       </TodoDetailWrapHeight>
 
-      {/*  */}
+      {/*  모달 ? 보이기? */}
       <CommentContainer>
         <HomeH1 font="1.7em">댓글창</HomeH1>
         <CommentForm>
@@ -54,20 +54,37 @@ const TodoDetail = () => {
           </TodoDetailBtn>
         </CommentForm>
 
-        <CommentBoxWarp>
-          <CommentBox width="100%" padding="10px">
-            <DivInnerBox padding="5px" size="0.75em">
-              닉네임
-            </DivInnerBox>
-            <DivInnerBox padding="5px" size="1em">
-              코멘트
-            </DivInnerBox>
-          </CommentBox>
-          <CommentBtnWarp>
-            <TodoDetailBtn>수정하기 버튼</TodoDetailBtn>
-            <TodoDetailBtn>삭제하기 버튼</TodoDetailBtn>
-          </CommentBtnWarp>
-        </CommentBoxWarp>
+        <CommentList>
+          <CommentBoxWarp>
+            <CommentBox width="100%" padding="10px">
+              <DivInnerBox padding="5px" size="0.75em">
+                닉네임
+              </DivInnerBox>
+              <DivInnerBox padding="5px" size="1em">
+                코멘트
+              </DivInnerBox>
+            </CommentBox>
+            <CommentBtnWarp>
+              <TodoDetailBtn>수정하기 버튼</TodoDetailBtn>
+              <TodoDetailBtn>삭제하기 버튼</TodoDetailBtn>
+            </CommentBtnWarp>
+          </CommentBoxWarp>
+
+          <CommentBoxWarp>
+            <CommentBox width="100%" padding="10px">
+              <DivInnerBox padding="5px" size="0.75em">
+                닉네임
+              </DivInnerBox>
+              <DivInnerBox padding="5px" size="1em">
+                코멘트
+              </DivInnerBox>
+            </CommentBox>
+            <CommentBtnWarp>
+              <TodoDetailBtn>수정하기 버튼</TodoDetailBtn>
+              <TodoDetailBtn>삭제하기 버튼</TodoDetailBtn>
+            </CommentBtnWarp>
+          </CommentBoxWarp>
+        </CommentList>
       </CommentContainer>
     </>
   );
@@ -169,5 +186,11 @@ const CommentBox = styled.div`
 const CommentBtnWarp = styled.div`
   display: flex;
   flex-direction: row;
+  gap: 10px;
+`;
+
+const CommentList = styled.div`
+  display: flex;
+  flex-direction: column;
   gap: 10px;
 `;
