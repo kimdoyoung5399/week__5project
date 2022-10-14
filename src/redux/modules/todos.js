@@ -1,15 +1,5 @@
-// Action Value
-const ADD_TODO = "ADD_TODO";
+import { createSlice } from "@reduxjs/toolkit";
 
-// Action Creator
-export const addTodo = (payload) => {
-  return {
-    type: ADD_TODO,
-    payload,
-  };
-};
-
-// initialState
 const initialState = {
   todos: [
     {
@@ -27,18 +17,17 @@ const initialState = {
   },
 };
 
-// Reducer
-const todos = (state = initialState, action) => {
-  switch (action.type) {
-    case ADD_TODO:
-      return {
-        ...state,
-        todos: [...state.todos, action.payload],
-      };
-    default:
-      return state;
-  }
-};
+const todosSlice = createSlice({
+  name: "todos",
+  initialState,
+  reducers: {
+    addTodo: (state, action) => {
+      console.log("action:", action);
+      state.todos = [...state.todos, action.payload];
+    },
+  },
+});
 
-//export
-export default todos;
+export const { addTodo } = todosSlice.actions;
+
+export default todosSlice.reducer;
