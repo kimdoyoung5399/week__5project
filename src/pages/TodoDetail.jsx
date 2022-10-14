@@ -1,10 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "../components/layout/Header";
-import { HashRouter, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const TodoDetail = () => {
   const nav = useNavigate();
+
+  const [inputs, setInputs] = useState({
+    id: 0,
+    commentTitle: "",
+    commentBody: "",
+  });
+
+  const { commentTitle, commentBody } = inputs;
+
+  const onChange = (e) => {
+    const { value, name } = e.target;
+    setInputs({ ...inputs, [name]: value });
+  };
 
   return (
     <>
@@ -46,16 +59,23 @@ const TodoDetail = () => {
               width="150px"
               padding="5px"
               height="30px"
+              name="commentTitle"
+              value={commentTitle}
+              onChange={onChange}
             />
             <CommentInput
               type="text"
               width="1000px"
               padding="5px"
               height="30px"
+              name="commentBody"
+              value={commentBody}
+              onChange={onChange}
             />
           </CommentInputbox>
+
           <TodoDetailBtn
-            width="150px"
+            width="100%"
             height="42px"
             padding="auto"
             margin="auto"
@@ -65,21 +85,6 @@ const TodoDetail = () => {
         </CommentForm>
 
         <CommentList>
-          <CommentBoxWarp>
-            <CommentBox width="100%" padding="10px">
-              <DivInnerBox padding="5px" size="0.75em">
-                닉네임
-              </DivInnerBox>
-              <DivInnerBox padding="5px" size="1em">
-                코멘트
-              </DivInnerBox>
-            </CommentBox>
-            <CommentBtnWarp>
-              <TodoDetailBtn>수정하기 버튼</TodoDetailBtn>
-              <TodoDetailBtn>삭제하기 버튼</TodoDetailBtn>
-            </CommentBtnWarp>
-          </CommentBoxWarp>
-
           <CommentBoxWarp>
             <CommentBox width="100%" padding="10px">
               <DivInnerBox padding="5px" size="0.75em">
@@ -154,6 +159,7 @@ const CommentContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin: 10px;
+  gap: 10px;
 `;
 
 const CommentForm = styled.form`
