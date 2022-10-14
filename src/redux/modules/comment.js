@@ -1,13 +1,4 @@
-// Action Value
-const COMMENT_ADD_TODO = "COMMENT_ADD_TODO";
-
-// Action Creator
-export const CommentaddTodo = (payload) => {
-  return {
-    type: COMMENT_ADD_TODO,
-    payload,
-  };
-};
+import { createSlice } from "@reduxjs/toolkit";
 
 // initialState
 const initialState = [
@@ -19,17 +10,16 @@ const initialState = [
 ];
 
 // Reducer
-const comment_reducer = (state = initialState, action) => {
-  switch (action.type) {
-    case COMMENT_ADD_TODO:
-      return {
-        ...state,
-        todos: [...state.todos, action.payload],
-      };
-    default:
-      return state;
-  }
-};
+const commentSlice = createSlice({
+  name: "comment",
+  initialState,
+  reducers: {
+    addComment: (state, action) => {
+      console.log(state[0]);
+    },
+  },
+});
 
-//export
-export default comment_reducer;
+export const { addComment } = commentSlice.actions;
+
+export default commentSlice.reducer;

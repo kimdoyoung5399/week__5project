@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import Header from "../components/layout/Header";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { addComment } from "../redux/modules/comment";
 
 const TodoDetail = () => {
   const nav = useNavigate();
+  const dispatch = useDispatch();
 
   const [inputs, setInputs] = useState({
-    id: 0,
+    id: new Date().getTime(),
     commentTitle: "",
     commentBody: "",
   });
@@ -19,6 +22,18 @@ const TodoDetail = () => {
     setInputs({ ...inputs, [name]: value });
   };
 
+  const submithandler = (e) => {
+    e.preventDefault();
+    if (inputs.commentTitle.trim() === "" || inputs.commentBody.trim() === "") {
+      return alert("Please enter a comment");
+    }
+    dispatch(addComment(inputs));
+
+    setInputs({
+      commentTitle: "",
+      commentBody: "",
+    });
+  };
   return (
     <>
       <Header />
@@ -52,7 +67,7 @@ const TodoDetail = () => {
       {/*  모달 ? 보이기? */}
       <CommentContainer>
         <HomeH1 font="1.7em">댓글창</HomeH1>
-        <CommentForm>
+        <CommentForm onSubmit={submithandler}>
           <CommentInputbox>
             <CommentInput
               type="text"
