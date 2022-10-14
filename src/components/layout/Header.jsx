@@ -18,7 +18,7 @@ const HeaderDiv = styled.div`
   gap: 20px;
   padding: 20px;
   justify-content: space-between;
-  margin: 5px;
+  margin: 10px;
   border: 1px solid tomato;
   border-radius: 5px;
 `;

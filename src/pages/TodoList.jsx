@@ -85,6 +85,7 @@ const TodoListBox = styled.div`
 
 const DivInnerWarp = styled.div`
   display: flex;
+  align-items: center;
   flex-direction: row;
   justify-content: space-between;
 `;
