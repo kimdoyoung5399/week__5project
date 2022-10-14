@@ -15,39 +15,45 @@ const TodoList = () => {
           <TodoListBox onClick={() => nav("/todolist/:id")}>
             <DivInnerWarp>
               <DivInnerBox size="1.3em">내용</DivInnerBox>
-              <DivInnerBox size="1.3em">휴지통</DivInnerBox>
+              <TodoListBtn size="1em" padding="10px" margin="10px">
+                휴지통
+              </TodoListBtn>
             </DivInnerWarp>
             <DivInnerBox size="1em">작성자 : 000</DivInnerBox>
           </TodoListBox>
-
           <TodoListBox onClick={() => nav("/todolist/:id")}>
             <DivInnerWarp>
               <DivInnerBox size="1.3em">내용</DivInnerBox>
-              <DivInnerBox size="1.3em">휴지통</DivInnerBox>
+              <TodoListBtn size="1em" padding="10px" margin="10px">
+                휴지통
+              </TodoListBtn>
             </DivInnerWarp>
             <DivInnerBox size="1em">작성자 : 000</DivInnerBox>
           </TodoListBox>
-
           <TodoListBox onClick={() => nav("/todolist/:id")}>
             <DivInnerWarp>
               <DivInnerBox size="1.3em">내용</DivInnerBox>
-              <DivInnerBox size="1.3em">휴지통</DivInnerBox>
+              <TodoListBtn size="1em" padding="10px" margin="10px">
+                휴지통
+              </TodoListBtn>
             </DivInnerWarp>
             <DivInnerBox size="1em">작성자 : 000</DivInnerBox>
           </TodoListBox>
-
           <TodoListBox onClick={() => nav("/todolist/:id")}>
             <DivInnerWarp>
               <DivInnerBox size="1.3em">내용</DivInnerBox>
-              <DivInnerBox size="1.3em">휴지통</DivInnerBox>
+              <TodoListBtn size="1em" padding="10px" margin="10px">
+                휴지통
+              </TodoListBtn>
             </DivInnerWarp>
             <DivInnerBox size="1em">작성자 : 000</DivInnerBox>
           </TodoListBox>
-
           <TodoListBox onClick={() => nav("/todolist/:id")}>
             <DivInnerWarp>
               <DivInnerBox size="1.3em">내용</DivInnerBox>
-              <DivInnerBox size="1.3em">휴지통</DivInnerBox>
+              <TodoListBtn size="1em" padding="10px" margin="10px">
+                휴지통
+              </TodoListBtn>
             </DivInnerWarp>
             <DivInnerBox size="1em">작성자 : 000</DivInnerBox>
           </TodoListBox>
@@ -71,6 +77,19 @@ const HomeH1 = styled.h1`
   padding: 10px;
 `;
 
+const TodoListBtn = styled.button`
+  margin: ${({ margin }) => margin};
+  padding: ${({ padding }) => padding};
+  text-align: center;
+  font-size: ${({ font }) => font};
+  background-color: transparent;
+  border: 0.02em solid tomato;
+  border-radius: 10px;
+  color: #ff9574;
+  width: ${({ width }) => width};
+  height: ${({ height }) => height};
+`;
+
 const TodoListWarp = styled.div`
   max-width: 95%;
   padding: 10px;
@@ -85,7 +104,6 @@ const TodoListBox = styled.div`
 
 const DivInnerWarp = styled.div`
   display: flex;
-  align-items: center;
   flex-direction: row;
   justify-content: space-between;
 `;

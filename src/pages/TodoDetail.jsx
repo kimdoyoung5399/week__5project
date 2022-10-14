@@ -1,8 +1,11 @@
 import React from "react";
 import Header from "../components/layout/Header";
+import { HashRouter, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const TodoDetail = () => {
+  const nav = useNavigate();
+
   return (
     <>
       <Header />
@@ -11,16 +14,23 @@ const TodoDetail = () => {
         <DivInnerBox padding="10px" size="1.5em">
           id :
         </DivInnerBox>
-        <TodoDetailBtn margin="5px" padding="10px" font="1.5em">
+        <TodoDetailBtn
+          onClick={() => nav("/todolist")}
+          margin="5px"
+          padding="10px"
+          font="1.5em"
+        >
           이전으로
         </TodoDetailBtn>
       </TodoDetailWrapWidth>
 
       <TodoDetailWrapHeight>
         <HomeH1 font="1.7em">제목</HomeH1>
-        <DivInnerBox padding="20px" size="1.5em" width="95%" height="200px">
+
+        <DivInnerBox padding="20px" size="1.5em" width="90%" height="200px">
           내용
         </DivInnerBox>
+
         <TodoDetailBtn width="95%" margin="10px" padding="10px" font="1em">
           수정하기
         </TodoDetailBtn>
@@ -107,6 +117,8 @@ const TodoDetailWrapHeight = styled.div`
   margin: 10px;
   padding: 1.2em 1em;
   align-items: center;
+  border: 0.02em solid tomato;
+  border-radius: 10px;
 `;
 
 const HomeH1 = styled.h1`
