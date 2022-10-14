@@ -1,10 +1,13 @@
 import React from "react";
-// import PropTypes from "prop-types";
 
 const btn = (props) => {
-  return <div>btn</div>;
+  /* label : button 이름, onClick : onClick, isDisabled : disabled, design : className */
+  const { label, feature, design, isDisable } = props;
+  return (
+    <button className={design} onClick={onClick} disabled={isDisable}>
+      {label}
+    </button>
+  );
 };
-
-btn.propTypes = {};
 
 export default btn;
