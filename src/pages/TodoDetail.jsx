@@ -1,23 +1,36 @@
-import React, { useState } from "react";
-import Header from "../components/layout/Header";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import Header from "../components/layout/Header";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { getData, patchData } from "../redux/modules/todos";
 
 const TodoDetail = () => {
   const nav = useNavigate();
+  const dispatch = useDispatch();
+  const { todos } = useSelector((state) => state.todos);
+  const { id } = useParams();
+
+  /* todos 데이터 관련 */
+
+  useEffect(() => {
+    dispatch(getData(id));
+  }, [dispatch, id]);
+  console.log(todos);
+
+  /* comments 데이터 관련 */
 
   const [inputs, setInputs] = useState({
     id: 0,
     commentTitle: "",
     commentBody: "",
   });
-
-  const { commentTitle, commentBody } = inputs;
-
   const onChange = (e) => {
     const { value, name } = e.target;
     setInputs({ ...inputs, [name]: value });
   };
+
+  const { commentTitle, commentBody } = inputs;
 
   return (
     <>
@@ -25,24 +38,23 @@ const TodoDetail = () => {
 
       <TodoDetailWrapWidth>
         <DivInnerBox padding="10px" size="1.5em">
-          id :
+          id : {id}
         </DivInnerBox>
         <TodoDetailBtn
           onClick={() => nav("/todolist")}
           margin="5px"
           padding="10px"
-          font="1.5em"
-        >
+          font="1.5em">
           이전으로
         </TodoDetailBtn>
       </TodoDetailWrapWidth>
 
       <TodoDetailWrapHeight>
-        <HomeH1 font="1.7em">제목</HomeH1>
+        <HomeH1 font="1.7em">{todos.title}</HomeH1>
 
-        <DivInnerBox padding="20px" size="1.5em" width="90%" height="200px">
+        <DivTextArea padding="20px" size="1.5em" width="90%" height="200px">
           내용
-        </DivInnerBox>
+        </DivTextArea>
 
         <TodoDetailBtn width="95%" margin="10px" padding="10px" font="1em">
           수정하기
@@ -78,8 +90,7 @@ const TodoDetail = () => {
             width="100%"
             height="42px"
             padding="auto"
-            margin="auto"
-          >
+            margin="auto">
             추가하기
           </TodoDetailBtn>
         </CommentForm>
@@ -135,6 +146,22 @@ const HomeH1 = styled.h1`
 `;
 
 const DivInnerBox = styled.div`
+  padding: ${({ padding }) => padding};
+  font-size: ${({ size }) => size};
+  width: ${({ width }) => width};
+  height: ${({ height }) => height};
+  color: tomato;
+`;
+
+const DivInput = styled.input`
+  padding: ${({ padding }) => padding};
+  font-size: ${({ size }) => size};
+  width: ${({ width }) => width};
+  height: ${({ height }) => height};
+  color: tomato;
+`;
+
+const DivTextArea = styled.textarea`
   padding: ${({ padding }) => padding};
   font-size: ${({ size }) => size};
   width: ${({ width }) => width};

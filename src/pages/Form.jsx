@@ -2,17 +2,17 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import Header from "../components/layout/Header";
-import { addTodo } from "../redux/modules/todos";
+import { postData } from "../redux/modules/todos";
 import nextId from "react-id-generator";
 
 const Form = () => {
   const dispatch = useDispatch();
   const [inputs, setInputs] = useState({
-    userName: "",
+    author: "",
     title: "",
-    body: "",
+    content: "",
   });
-  const { userName, title, body } = inputs;
+  const { author, title, content } = inputs;
 
   const changeHandler = (e) => {
     const { name, value } = e.target;
@@ -26,21 +26,21 @@ const Form = () => {
   const submitHandler = (e) => {
     const id = nextId(); // 제출하기 했을 때만 id값이 증가하도록 안에 넣어야 함
     e.preventDefault();
-    if (inputs.userName === "" || inputs.title === "" || inputs.body === "") {
+    if (inputs.author === "" || inputs.title === "" || inputs.content === "") {
       window.alert("입력하세요");
       return;
     }
     console.log("id:", id);
     dispatch(
-      addTodo({
-        id,
+      postData({
+        id: Date.now(),
         ...inputs,
       })
     );
     setInputs({
-      userName: "",
+      author: "",
       title: "",
-      body: "",
+      content: "",
     });
   };
 
@@ -53,8 +53,8 @@ const Form = () => {
           <br />
           <FormInput
             type="text"
-            name="userName"
-            value={userName}
+            name="author"
+            value={author}
             onChange={changeHandler}
           />
         </FormInputWrap>
@@ -73,8 +73,8 @@ const Form = () => {
           <br />
           <FormInput
             type="text"
-            name="body"
-            value={body}
+            name="content"
+            value={content} 
             onChange={changeHandler}
           />
         </FormInputWrap>

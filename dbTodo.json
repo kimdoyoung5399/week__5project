@@ -2,16 +2,23 @@
   "todos": [
     {
       "id": 1,
-      "author": "typicode",
-      "title": "json-server",
-      "content": "호호호호"
+      "author": "asdfdf",
+      "title": "adf",
+      "content": "sdf"
+    },
+    {
+      "id": 1666018052331,
+      "author": "test",
+      "title": "test12",
+      "content": "test123"
     }
   ],
   "comments": [
     {
-      "postId": 1,
-      "user": "하이용",
-      "body": "쿠쿠루삥뽕"
+      "id": 1,
+      "postId": "",
+      "user": "",
+      "body": ""
     }
   ]
 }
