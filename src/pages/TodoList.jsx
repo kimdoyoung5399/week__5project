@@ -24,32 +24,14 @@ const TodoList = () => {
   return (
     <div>
       <Header />
-<<<<<<< HEAD
-      <TodoListDiv>
-        <HomeH1>My List</HomeH1>
-        <TodoListWarp>
-          {[1, 2, 3].map((item) => (
-            <TodoListBox onClick={() => nav("/todolist/:id")}>
-              <DivInnerWarp>
-                <DivInnerBox size="1.3em">내용</DivInnerBox>
-                <TodoListBtn size="1em" padding="10px" margin="10px">
-                  휴지통
-                </TodoListBtn>
-              </DivInnerWarp>
-              <DivInnerBox size="1em">작성자 : 000</DivInnerBox>
-            </TodoListBox>
-          ))}
-        </TodoListWarp>
-      </TodoListDiv>
-    </>
-=======
       <HomeH1>My List</HomeH1>
       {todos?.map((todo) => (
         <TodoListDiv key={todo.id}>
           <TodoListWarp>
             <TodoListBox
               onClick={() => nav(`/todolist/${todo.id}`)}
-              todos={todos}>
+              todos={todos}
+            >
               <DivInnerWarp>
                 <DivInnerBox size="1.3em">{todo.content}</DivInnerBox>
                 <TodoListBtn size="1em" padding="10px" margin="10px">
@@ -64,7 +46,6 @@ const TodoList = () => {
         </TodoListDiv>
       ))}
     </div>
->>>>>>> 364c4b1bcf7af2bc6c3f170ea030f9ebebc6570c
   );
 };
 

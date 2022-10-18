@@ -4,9 +4,9 @@ import axios from "axios";
 // Thunk
 export const __getComments = createAsyncThunk(
   "comments/getComments",
-  async (_, thunkAPI) => {
+  async (payload, thunkAPI) => {
     try {
-      const data = await axios.get("http://localhost:3001/comments");
+      const data = await axios.get("http://localhost:3001/comments", payload);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -87,7 +87,9 @@ export const commentSlice = createSlice({
     builder.addCase(__getComments.fulfilled, (state, action) => {
       console.log("get부분:", state, action);
       state.isLoading = false;
-      state.comments = action.payload;
+      state.comments = state.comments.filter(
+        (comment) => comment.id === action.payload
+      );
     });
     builder.addCase(__getComments.rejected, (state, action) => {
       state.isLoading = false;

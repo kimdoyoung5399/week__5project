@@ -10,10 +10,15 @@ import {
   __getComments,
 } from "../redux/modules/comment";
 
-const TodoDetailList = ({ comment }) => {
+const TodoDetailList = ({ comment, id }) => {
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(__getComments());
+  }, [dispatch]);
+
   const onDelete = () => {
-    dispatch(__deleteComments(comment));
+    dispatch(__deleteComments(comment, id));
   };
 
   const onEdit = () => {};
@@ -38,14 +43,17 @@ const TodoDetail = () => {
   const nav = useNavigate();
   const dispatch = useDispatch();
   const { todos } = useSelector((state) => state.todos);
+  const { comments } = useSelector((state) => state.comments);
   const { id } = useParams();
 
   /* todos 데이터 관련 */
 
   useEffect(() => {
-    dispatch(getData(id));
-  }, [dispatch, id]);
+    dispatch(getData());
+  }, [dispatch]);
   console.log(todos);
+
+  const todo = todos.find((todo) => todo.id === +id);
 
   /* comment 데이터 관련 */
   const [inputs, setInputs] = useState({
@@ -67,6 +75,7 @@ const TodoDetail = () => {
       __addComments({
         postId: Date.now(),
         ...inputs,
+        id,
       })
     );
     setInputs({
@@ -95,10 +104,13 @@ const TodoDetail = () => {
       </TodoDetailWrapWidth>
 
       <TodoDetailWrapHeight>
-        <HomeH1 font="1.7em">{todos.title}</HomeH1>
+        <HomeH1 font="1.7em">{todo.author}</HomeH1>
 
         <DivTextArea padding="20px" size="1.5em" width="90%" height="200px">
-          내용
+          {todo.title}
+        </DivTextArea>
+        <DivTextArea padding="20px" size="1.5em" width="90%" height="200px">
+          {todo.body}
         </DivTextArea>
 
         <TodoDetailBtn width="95%" margin="10px" padding="10px" font="1em">
@@ -144,8 +156,12 @@ const TodoDetail = () => {
         <CommentList>
           <CommentBoxWarp>
             <CommentBox width="100%" padding="10px">
-              {comments.map((comment) => (
-                <TodoDetailList key={comment.postId} comment={comment} />
+              {comments?.map((comment) => (
+                <TodoDetailList
+                  key={comment.postId}
+                  comment={comment}
+                  id={id}
+                />
               ))}
             </CommentBox>
           </CommentBoxWarp>
@@ -200,7 +216,7 @@ const DivInput = styled.input`
   color: tomato;
 `;
 
-const DivTextArea = styled.textarea`
+const DivTextArea = styled.div`
   padding: ${({ padding }) => padding};
   font-size: ${({ size }) => size};
   width: ${({ width }) => width};
