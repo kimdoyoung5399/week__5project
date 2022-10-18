@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
-import Header from "../components/layout/Header";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import Header from "../components/layout/Header";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { getData, patchData } from "../redux/modules/todos";
 import {
   __addComments,
   __deleteComments,
@@ -34,21 +35,23 @@ const TodoDetailList = ({ comment }) => {
 };
 
 const TodoDetail = () => {
-  const dispatch = useDispatch();
   const nav = useNavigate();
+  const dispatch = useDispatch();
+  const { todos } = useSelector((state) => state.todos);
+  const { id } = useParams();
 
-  const { comments } = useSelector((state) => state.comments);
-  console.log("comments:", comments);
+  /* todos 데이터 관련 */
 
   useEffect(() => {
-    dispatch(__getComments());
-  }, [dispatch]);
+    dispatch(getData(id));
+  }, [dispatch, id]);
+  console.log(todos);
 
+  /* comment 데이터 관련 */
   const [inputs, setInputs] = useState({
     user: "",
     body: "",
   });
-
   const { user, body } = inputs;
 
   const onChange = (e) => {
@@ -79,7 +82,7 @@ const TodoDetail = () => {
 
       <TodoDetailWrapWidth>
         <DivInnerBox padding="10px" size="1.5em">
-          id :
+          id : {id}
         </DivInnerBox>
         <TodoDetailBtn
           onClick={() => nav("/todolist")}
@@ -92,11 +95,11 @@ const TodoDetail = () => {
       </TodoDetailWrapWidth>
 
       <TodoDetailWrapHeight>
-        <HomeH1 font="1.7em">제목</HomeH1>
+        <HomeH1 font="1.7em">{todos.title}</HomeH1>
 
-        <DivInnerBox padding="20px" size="1.5em" width="90%" height="200px">
+        <DivTextArea padding="20px" size="1.5em" width="90%" height="200px">
           내용
-        </DivInnerBox>
+        </DivTextArea>
 
         <TodoDetailBtn width="95%" margin="10px" padding="10px" font="1em">
           수정하기
@@ -182,6 +185,22 @@ const HomeH1 = styled.h1`
 `;
 
 const DivInnerBox = styled.div`
+  padding: ${({ padding }) => padding};
+  font-size: ${({ size }) => size};
+  width: ${({ width }) => width};
+  height: ${({ height }) => height};
+  color: tomato;
+`;
+
+const DivInput = styled.input`
+  padding: ${({ padding }) => padding};
+  font-size: ${({ size }) => size};
+  width: ${({ width }) => width};
+  height: ${({ height }) => height};
+  color: tomato;
+`;
+
+const DivTextArea = styled.textarea`
   padding: ${({ padding }) => padding};
   font-size: ${({ size }) => size};
   width: ${({ width }) => width};

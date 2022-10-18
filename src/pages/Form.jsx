@@ -1,22 +1,20 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Header from "../components/layout/Header";
+import { postData } from "../redux/modules/todos";
+import nextId from "react-id-generator";
+import { useDispatch } from "react-redux";
 
 const Form = () => {
   const nav = useNavigate();
-  const [todo, setTodo] = useState({
+  const dispatch = useDispatch();
+  const [inputs, setInputs] = useState({
     author: "",
     title: "",
-    body: "",
+    content: "",
   });
-  const [todos, setTodos] = useState(null);
-
-  const fetchTodos = async () => {
-    const { data } = await axios.get("http://localhost:3001/todos");
-    setTodos(data);
-  };
+  const { author, title, content } = inputs;
 
   const changeHandler = (e) => {
     const { name, value } = e.target;
@@ -27,9 +25,25 @@ const Form = () => {
     console.log(todo);
   };
 
-  const submitHandler = (todo) => {
-    axios.post("http://localhost:3001/todos", todo);
-    setTodos([...todos, todo]);
+  const submitHandler = (e) => {
+    const id = nextId(); // 제출하기 했을 때만 id값이 증가하도록 안에 넣어야 함
+    e.preventDefault();
+    if (inputs.author === "" || inputs.title === "" || inputs.content === "") {
+      window.alert("입력하세요");
+      return;
+    }
+    console.log("id:", id);
+    dispatch(
+      postData({
+        id: Date.now(),
+        ...inputs,
+      })
+    );
+    setInputs({
+      author: "",
+      title: "",
+      content: "",
+    });
   };
 
   useEffect(() => {
@@ -51,7 +65,7 @@ const Form = () => {
           <FormInput
             type="text"
             name="author"
-            value={todo.author}
+            value={author}
             onChange={changeHandler}
             required
           />
@@ -62,7 +76,7 @@ const Form = () => {
           <FormInput
             type="text"
             name="title"
-            value={todo.title}
+            value={title}
             onChange={changeHandler}
             required
           />
@@ -72,8 +86,8 @@ const Form = () => {
           <br />
           <FormInput
             type="text"
-            name="body"
-            value={todo.body}
+            name="content"
+            value={content}
             onChange={changeHandler}
             required
           />

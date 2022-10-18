@@ -1,0 +1,23 @@
+.example {
+  width: 70px;
+  height: 30px;
+  margin-right: 10px;
+  margin-bottom: 60px;
+  padding: 8px;
+  font-size: 0.8rem;
+  color: #ffffff;
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 255);
+  background-color: #e73737;
+  box-shadow: 0 4px 9px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(9px);
+  -webkit-backdrop-filter: blur(9px);
+  border: none;
+  border-radius: 7px;
+  //justify-content: left;
+  display: inline;
+}
+
+.example:active {
+  box-shadow: inset 2px 2px 2px 2px #2424243e;
+}
+

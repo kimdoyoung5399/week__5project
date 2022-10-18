@@ -2,10 +2,23 @@
   "todos": [
     {
       "id": 1,
-      "author": "typicode",
-      "title": "json-server",
-      "content": "호호호호"
+      "author": "asdfdf",
+      "title": "adf",
+      "content": "sdf"
+    },
+    {
+      "id": 1666018052331,
+      "author": "test",
+      "title": "test12",
+      "content": "test123"
     }
   ],
-  "comments": []
+  "comments": [
+    {
+      "id": 1,
+      "postId": "",
+      "user": "",
+      "body": ""
+    }
+  ]
 }
