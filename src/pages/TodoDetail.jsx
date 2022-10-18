@@ -4,6 +4,35 @@ import Header from "../components/layout/Header";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { getData, patchData } from "../redux/modules/todos";
+import {
+  __addComments,
+  __deleteComments,
+  __getComments,
+} from "../redux/modules/comment";
+
+const TodoDetailList = ({ comment }) => {
+  const dispatch = useDispatch();
+  const onDelete = () => {
+    dispatch(__deleteComments(comment));
+  };
+
+  const onEdit = () => {};
+
+  return (
+    <div>
+      <DivInnerBox padding="5px" size="0.75em">
+        {comment.user}
+      </DivInnerBox>
+      <DivInnerBox padding="5px" size="1em">
+        {comment.body}
+      </DivInnerBox>
+      <CommentBtnWarp>
+        <TodoDetailBtn>수정</TodoDetailBtn>
+        <TodoDetailBtn onClick={onDelete}>삭제</TodoDetailBtn>
+      </CommentBtnWarp>
+    </div>
+  );
+};
 
 const TodoDetail = () => {
   const nav = useNavigate();
@@ -18,19 +47,34 @@ const TodoDetail = () => {
   }, [dispatch, id]);
   console.log(todos);
 
-  /* comments 데이터 관련 */
-
+  /* comment 데이터 관련 */
   const [inputs, setInputs] = useState({
-    id: 0,
-    commentTitle: "",
-    commentBody: "",
+    user: "",
+    body: "",
   });
+  const { user, body } = inputs;
+
   const onChange = (e) => {
     const { value, name } = e.target;
     setInputs({ ...inputs, [name]: value });
   };
 
-  const { commentTitle, commentBody } = inputs;
+  const onSubmit = (e) => {
+    e.preventDefault();
+    if (inputs.user === "" || inputs.body === "") return;
+
+    dispatch(
+      __addComments({
+        postId: Date.now(),
+        ...inputs,
+      })
+    );
+    setInputs({
+      user: "",
+      body: "",
+    });
+  };
+  console.log("inputs:", inputs);
 
   return (
     <>
@@ -44,7 +88,8 @@ const TodoDetail = () => {
           onClick={() => nav("/todolist")}
           margin="5px"
           padding="10px"
-          font="1.5em">
+          font="1.5em"
+        >
           이전으로
         </TodoDetailBtn>
       </TodoDetailWrapWidth>
@@ -64,15 +109,15 @@ const TodoDetail = () => {
       {/*  모달 ? 보이기? */}
       <CommentContainer>
         <HomeH1 font="1.7em">댓글창</HomeH1>
-        <CommentForm>
+        <CommentForm onSubmit={onSubmit}>
           <CommentInputbox>
             <CommentInput
               type="text"
               width="150px"
               padding="5px"
               height="30px"
-              name="commentTitle"
-              value={commentTitle}
+              name="user"
+              value={user}
               onChange={onChange}
             />
             <CommentInput
@@ -80,8 +125,8 @@ const TodoDetail = () => {
               width="1000px"
               padding="5px"
               height="30px"
-              name="commentBody"
-              value={commentBody}
+              name="body"
+              value={body}
               onChange={onChange}
             />
           </CommentInputbox>
@@ -90,7 +135,8 @@ const TodoDetail = () => {
             width="100%"
             height="42px"
             padding="auto"
-            margin="auto">
+            margin="auto"
+          >
             추가하기
           </TodoDetailBtn>
         </CommentForm>
@@ -98,17 +144,10 @@ const TodoDetail = () => {
         <CommentList>
           <CommentBoxWarp>
             <CommentBox width="100%" padding="10px">
-              <DivInnerBox padding="5px" size="0.75em">
-                닉네임
-              </DivInnerBox>
-              <DivInnerBox padding="5px" size="1em">
-                코멘트
-              </DivInnerBox>
+              {comments.map((comment) => (
+                <TodoDetailList key={comment.postId} comment={comment} />
+              ))}
             </CommentBox>
-            <CommentBtnWarp>
-              <TodoDetailBtn>수정하기 버튼</TodoDetailBtn>
-              <TodoDetailBtn>삭제하기 버튼</TodoDetailBtn>
-            </CommentBtnWarp>
           </CommentBoxWarp>
         </CommentList>
       </CommentContainer>

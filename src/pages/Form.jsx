@@ -1,11 +1,13 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Header from "../components/layout/Header";
 import { postData } from "../redux/modules/todos";
 import nextId from "react-id-generator";
+import { useDispatch } from "react-redux";
 
 const Form = () => {
+  const nav = useNavigate();
   const dispatch = useDispatch();
   const [inputs, setInputs] = useState({
     author: "",
@@ -16,12 +18,12 @@ const Form = () => {
 
   const changeHandler = (e) => {
     const { name, value } = e.target;
-    setInputs({
-      ...inputs,
+    setTodo({
+      ...todo,
       [name]: value,
     });
+    console.log(todo);
   };
-  console.log("inputs:", inputs);
 
   const submitHandler = (e) => {
     const id = nextId(); // 제출하기 했을 때만 id값이 증가하도록 안에 넣어야 함
@@ -44,10 +46,19 @@ const Form = () => {
     });
   };
 
+  useEffect(() => {
+    fetchTodos();
+  }, []);
+
   return (
     <>
       <Header />
-      <FormWrap onSubmit={submitHandler}>
+      <FormWrap
+        onSubmit={(e) => {
+          e.preventDefault();
+          submitHandler(todo);
+        }}
+      >
         <FormInputWrap>
           <label htmlFor="">작성자</label>
           <br />
@@ -56,6 +67,7 @@ const Form = () => {
             name="author"
             value={author}
             onChange={changeHandler}
+            required
           />
         </FormInputWrap>
         <FormInputWrap>
@@ -66,6 +78,7 @@ const Form = () => {
             name="title"
             value={title}
             onChange={changeHandler}
+            required
           />
         </FormInputWrap>
         <FormInputWrap>
@@ -74,12 +87,13 @@ const Form = () => {
           <FormInput
             type="text"
             name="content"
-            value={content} 
+            value={content}
             onChange={changeHandler}
+            required
           />
         </FormInputWrap>
         <FormBtnWrap>
-          <FormBtn>작성하기</FormBtn>
+          <FormBtn onClick={() => nav("/todolist")}>작성하기</FormBtn>
         </FormBtnWrap>
       </FormWrap>
     </>
