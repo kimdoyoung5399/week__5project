@@ -152,7 +152,6 @@ const TodoDetail = () => {
             추가하기
           </TodoDetailBtn>
         </CommentForm>
-
         <CommentList>
           <CommentBoxWarp>
             <CommentBox width="100%" padding="10px">
