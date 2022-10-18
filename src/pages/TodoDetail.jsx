@@ -5,10 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { getData, patchData } from "../redux/modules/todos";
 
-const TodoDetail = () => {
+const TodoDetail = (props) => {
   const nav = useNavigate();
-  const dispatch = useDispatch();
   const { todos } = useSelector((state) => state.todos);
+  const dispatch = useDispatch();
   const { id } = useParams();
 
   /* todos 데이터 관련 */
@@ -16,8 +16,15 @@ const TodoDetail = () => {
   useEffect(() => {
     dispatch(getData(id));
   }, [dispatch, id]);
-  console.log(todos);
 
+  const todo = todos.find((todo) => todo.id === +id);
+
+  console.log(todos);
+  const [before, after] = useState({
+    content: todos.content,
+  });
+
+  console.log(before);
   /* comments 데이터 관련 */
 
   const [inputs, setInputs] = useState({
@@ -50,10 +57,10 @@ const TodoDetail = () => {
       </TodoDetailWrapWidth>
 
       <TodoDetailWrapHeight>
-        <HomeH1 font="1.7em">{todos.title}</HomeH1>
+        <HomeH1 font="1.7em">{todo.title}</HomeH1>
 
         <DivTextArea padding="20px" size="1.5em" width="90%" height="200px">
-          내용
+          {todo.content}
         </DivTextArea>
 
         <TodoDetailBtn width="95%" margin="10px" padding="10px" font="1em">

@@ -26,7 +26,7 @@ const TodoList = () => {
       <Header />
       <HomeH1>My List</HomeH1>
       {todos?.map((todo) => (
-        <TodoListDiv key={todo.id}>
+        <TodoListDiv key={todo.id} todos={todos}>
           <TodoListWarp>
             <TodoListBox
               onClick={() => nav(`/todolist/${todo.id}`)}
