@@ -3,11 +3,7 @@ import styled from "styled-components";
 
 const Btn = (props) => {
   /* label : button 이름, onClick : onClick, isDisabled : disabled, design : className */
-<<<<<<< HEAD
-  const { label, onClick, design, isDisable } = props;
-=======
   const { label, onClick, isDisable } = props;
->>>>>>> origin
   return (
     <button onClick={onClick} disabled={isDisable}>
       {label}
