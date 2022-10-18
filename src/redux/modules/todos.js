@@ -41,7 +41,7 @@ export const postData = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const res = await axios.post("http://localhost:3001/todos", payload);
-      console.log(res);
+      console.log("post res:", res);
       /* thunkAPI로 payload가 undefined가 뜰 수 있기 때문에 안전하게 직접 경로로 보내주자 */
       return thunkAPI.fulfillWithValue(res.data);
     } catch (err) {
