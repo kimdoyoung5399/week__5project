@@ -12,51 +12,17 @@ const TodoList = () => {
       <TodoListDiv>
         <HomeH1>My List</HomeH1>
         <TodoListWarp>
-          <TodoListBox onClick={() => nav("/todolist/:id")}>
-            <DivInnerWarp>
-              <DivInnerBox size="1.3em">내용</DivInnerBox>
-              <TodoListBtn size="1em" padding="10px" margin="10px">
-                휴지통
-              </TodoListBtn>
-            </DivInnerWarp>
-            <DivInnerBox size="1em">작성자 : 000</DivInnerBox>
-          </TodoListBox>
-          <TodoListBox onClick={() => nav("/todolist/:id")}>
-            <DivInnerWarp>
-              <DivInnerBox size="1.3em">내용</DivInnerBox>
-              <TodoListBtn size="1em" padding="10px" margin="10px">
-                휴지통
-              </TodoListBtn>
-            </DivInnerWarp>
-            <DivInnerBox size="1em">작성자 : 000</DivInnerBox>
-          </TodoListBox>
-          <TodoListBox onClick={() => nav("/todolist/:id")}>
-            <DivInnerWarp>
-              <DivInnerBox size="1.3em">내용</DivInnerBox>
-              <TodoListBtn size="1em" padding="10px" margin="10px">
-                휴지통
-              </TodoListBtn>
-            </DivInnerWarp>
-            <DivInnerBox size="1em">작성자 : 000</DivInnerBox>
-          </TodoListBox>
-          <TodoListBox onClick={() => nav("/todolist/:id")}>
-            <DivInnerWarp>
-              <DivInnerBox size="1.3em">내용</DivInnerBox>
-              <TodoListBtn size="1em" padding="10px" margin="10px">
-                휴지통
-              </TodoListBtn>
-            </DivInnerWarp>
-            <DivInnerBox size="1em">작성자 : 000</DivInnerBox>
-          </TodoListBox>
-          <TodoListBox onClick={() => nav("/todolist/:id")}>
-            <DivInnerWarp>
-              <DivInnerBox size="1.3em">내용</DivInnerBox>
-              <TodoListBtn size="1em" padding="10px" margin="10px">
-                휴지통
-              </TodoListBtn>
-            </DivInnerWarp>
-            <DivInnerBox size="1em">작성자 : 000</DivInnerBox>
-          </TodoListBox>
+          {[1, 2, 3].map((item) => (
+            <TodoListBox onClick={() => nav("/todolist/:id")}>
+              <DivInnerWarp>
+                <DivInnerBox size="1.3em">내용</DivInnerBox>
+                <TodoListBtn size="1em" padding="10px" margin="10px">
+                  휴지통
+                </TodoListBtn>
+              </DivInnerWarp>
+              <DivInnerBox size="1em">작성자 : 000</DivInnerBox>
+            </TodoListBox>
+          ))}
         </TodoListWarp>
       </TodoListDiv>
     </>

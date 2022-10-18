@@ -1,23 +1,77 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../components/layout/Header";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  __addComments,
+  __deleteComments,
+  __getComments,
+} from "../redux/modules/comment";
+
+const TodoDetailList = ({ comment }) => {
+  const dispatch = useDispatch();
+  const onDelete = () => {
+    dispatch(__deleteComments(comment));
+  };
+
+  const onEdit = () => {};
+
+  return (
+    <div>
+      <DivInnerBox padding="5px" size="0.75em">
+        {comment.user}
+      </DivInnerBox>
+      <DivInnerBox padding="5px" size="1em">
+        {comment.body}
+      </DivInnerBox>
+      <CommentBtnWarp>
+        <TodoDetailBtn>수정</TodoDetailBtn>
+        <TodoDetailBtn onClick={onDelete}>삭제</TodoDetailBtn>
+      </CommentBtnWarp>
+    </div>
+  );
+};
 
 const TodoDetail = () => {
+  const dispatch = useDispatch();
   const nav = useNavigate();
 
+  const { comments } = useSelector((state) => state.comments);
+  console.log("comments:", comments);
+
+  useEffect(() => {
+    dispatch(__getComments());
+  }, [dispatch]);
+
   const [inputs, setInputs] = useState({
-    id: 0,
-    commentTitle: "",
-    commentBody: "",
+    user: "",
+    body: "",
   });
 
-  const { commentTitle, commentBody } = inputs;
+  const { user, body } = inputs;
 
   const onChange = (e) => {
     const { value, name } = e.target;
     setInputs({ ...inputs, [name]: value });
   };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    if (inputs.user === "" || inputs.body === "") return;
+
+    dispatch(
+      __addComments({
+        postId: Date.now(),
+        ...inputs,
+      })
+    );
+    setInputs({
+      user: "",
+      body: "",
+    });
+  };
+  console.log("inputs:", inputs);
 
   return (
     <>
@@ -52,15 +106,15 @@ const TodoDetail = () => {
       {/*  모달 ? 보이기? */}
       <CommentContainer>
         <HomeH1 font="1.7em">댓글창</HomeH1>
-        <CommentForm>
+        <CommentForm onSubmit={onSubmit}>
           <CommentInputbox>
             <CommentInput
               type="text"
               width="150px"
               padding="5px"
               height="30px"
-              name="commentTitle"
-              value={commentTitle}
+              name="user"
+              value={user}
               onChange={onChange}
             />
             <CommentInput
@@ -68,8 +122,8 @@ const TodoDetail = () => {
               width="1000px"
               padding="5px"
               height="30px"
-              name="commentBody"
-              value={commentBody}
+              name="body"
+              value={body}
               onChange={onChange}
             />
           </CommentInputbox>
@@ -87,17 +141,10 @@ const TodoDetail = () => {
         <CommentList>
           <CommentBoxWarp>
             <CommentBox width="100%" padding="10px">
-              <DivInnerBox padding="5px" size="0.75em">
-                닉네임
-              </DivInnerBox>
-              <DivInnerBox padding="5px" size="1em">
-                코멘트
-              </DivInnerBox>
+              {comments.map((comment) => (
+                <TodoDetailList key={comment.postId} comment={comment} />
+              ))}
             </CommentBox>
-            <CommentBtnWarp>
-              <TodoDetailBtn>수정하기 버튼</TodoDetailBtn>
-              <TodoDetailBtn>삭제하기 버튼</TodoDetailBtn>
-            </CommentBtnWarp>
           </CommentBoxWarp>
         </CommentList>
       </CommentContainer>

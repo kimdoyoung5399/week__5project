@@ -1,61 +1,59 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Header from "../components/layout/Header";
-import { addTodo } from "../redux/modules/todos";
-import nextId from "react-id-generator";
 
 const Form = () => {
-  const dispatch = useDispatch();
-  const [inputs, setInputs] = useState({
-    userName: "",
+  const nav = useNavigate();
+  const [todo, setTodo] = useState({
+    author: "",
     title: "",
     body: "",
   });
-  const { userName, title, body } = inputs;
+  const [todos, setTodos] = useState(null);
+
+  const fetchTodos = async () => {
+    const { data } = await axios.get("http://localhost:3001/todos");
+    setTodos(data);
+  };
 
   const changeHandler = (e) => {
     const { name, value } = e.target;
-    setInputs({
-      ...inputs,
+    setTodo({
+      ...todo,
       [name]: value,
     });
+    console.log(todo);
   };
-  console.log("inputs:", inputs);
 
-  const submitHandler = (e) => {
-    const id = nextId(); // 제출하기 했을 때만 id값이 증가하도록 안에 넣어야 함
-    e.preventDefault();
-    if (inputs.userName === "" || inputs.title === "" || inputs.body === "") {
-      window.alert("입력하세요");
-      return;
-    }
-    console.log("id:", id);
-    dispatch(
-      addTodo({
-        id,
-        ...inputs,
-      })
-    );
-    setInputs({
-      userName: "",
-      title: "",
-      body: "",
-    });
+  const submitHandler = (todo) => {
+    axios.post("http://localhost:3001/todos", todo);
+    setTodos([...todos, todo]);
   };
+
+  useEffect(() => {
+    fetchTodos();
+  }, []);
 
   return (
     <>
       <Header />
-      <FormWrap onSubmit={submitHandler}>
+      <FormWrap
+        onSubmit={(e) => {
+          e.preventDefault();
+          submitHandler(todo);
+        }}
+      >
         <FormInputWrap>
           <label htmlFor="">작성자</label>
           <br />
           <FormInput
             type="text"
-            name="userName"
-            value={userName}
+            name="author"
+            value={todo.author}
             onChange={changeHandler}
+            required
           />
         </FormInputWrap>
         <FormInputWrap>
@@ -64,8 +62,9 @@ const Form = () => {
           <FormInput
             type="text"
             name="title"
-            value={title}
+            value={todo.title}
             onChange={changeHandler}
+            required
           />
         </FormInputWrap>
         <FormInputWrap>
@@ -74,12 +73,13 @@ const Form = () => {
           <FormInput
             type="text"
             name="body"
-            value={body}
+            value={todo.body}
             onChange={changeHandler}
+            required
           />
         </FormInputWrap>
         <FormBtnWrap>
-          <FormBtn>작성하기</FormBtn>
+          <FormBtn onClick={() => nav("/todolist")}>작성하기</FormBtn>
         </FormBtnWrap>
       </FormWrap>
     </>
