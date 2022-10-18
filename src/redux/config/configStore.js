@@ -2,10 +2,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import logger from "redux-logger";
 import todos from "../modules/todos";
-import comment from "../modules/comment";
+import comments from "../modules/comment";
 
 const store = configureStore({
-  reducer: { todos },
+  reducer: { todos, comments },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ serializableCheck: false }).concat(logger),
 });
