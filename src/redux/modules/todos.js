@@ -12,7 +12,7 @@ const initialState = {
       content: "",
     },
   ],
-  isLoading: false,
+  isLoading: false, // The boolean data for loading
 };
 
 /* Thunk Functions */
@@ -37,13 +37,10 @@ export const getData = createAsyncThunk(
 /* 게시글 id 값을 부여 후 todo 추가 get -> post  */
 
 export const postData = createAsyncThunk(
-  "todos/getData",
+  "todos/postData",
   async (payload, thunkAPI) => {
     try {
-      //const { author, title, content } = payload;
-      const res = await axios.post("http://localhost:3001/todos", {
-        payload,
-      });
+      const res = await axios.post("http://localhost:3001/todos", payload);
       console.log(res);
       /* thunkAPI로 payload가 undefined가 뜰 수 있기 때문에 안전하게 직접 경로로 보내주자 */
       return thunkAPI.fulfillWithValue(res.data);
@@ -57,11 +54,10 @@ export const postData = createAsyncThunk(
 /* 해당 id의 todo 를 update 인자에 저장 후 반환 */
 
 export const updateData = createAsyncThunk(
-  "todos/getData",
-  async (payload, thunkAPI) => {
+  "todos/updateData",
+  async (todoId, thunkAPI) => {
     try {
-      const res = await axios.patch("http://localhost:3001/todos");
-      //const todoData = res.data;
+      const res = await axios.patch(`http://localhost:3001/todos/${todoId}`);
       console.log(res);
       /* thunkAPI로 payload가 undefined가 뜰 수 있기 때문에 안전하게 직접 경로로 보내주자 */
       return thunkAPI.fulfillWithValue(res.data);
@@ -75,14 +71,14 @@ export const updateData = createAsyncThunk(
 /* 해당 id에 todo를 삭제 */
 
 export const deleteData = createAsyncThunk(
-  "todos/getData",
-  async (payload, thunkAPI) => {
+  "todos/deleteData",
+  async (todoId, thunkAPI) => {
     try {
-      const res = await axios.delete("http://localhost:3001/todos");
+      const res = await axios.delete(`http://localhost:3001/todos/${todoId}`);
       //const todoData = res.data;
       console.log(res);
       /* thunkAPI로 payload가 undefined가 뜰 수 있기 때문에 안전하게 직접 경로로 보내주자 */
-      return thunkAPI.fulfillWithValue(res.data);
+      return thunkAPI.fulfillWithValue(todoId);
     } catch (err) {
       console.log(err);
       return thunkAPI.rejectWithValue(err);
@@ -108,60 +104,65 @@ const todosSlice = createSlice({
 
   extraReducers: (builder) => {
     /* ----------- getData(전체 게시글 조회) ---------------- */
-    builder.addCase(getData.pending, (state, { payload }) => {
-      //state.todos = payload;
-      console.log("pending");
+    builder.addCase(getData.pending, (state) => {
+      state.isLoading = true;
+      console.log("pending", state.isLoading);
     });
     builder.addCase(getData.fulfilled, (state, action) => {
       state.todos = action.payload;
-      state.isLoading = true;
-      console.log(state, action);
+      state.isLoading = false;
+      console.log("fulfilled :", state);
     });
-    builder.addCase(getData.rejected, (state, action) => {
+    builder.addCase(getData.rejected, (state) => {
+      state.isLoading = false;
       console.log("error");
     });
 
     /* ----------- postData(Todo 추가) ---------------- */
-    /*     builder.addCase(postData.pending, (state, { payload }) => {
-      //state.todos = payload;
-      console.log("pending");
+    builder.addCase(postData.pending, (state) => {
+      state.isLoading = true;
+      console.log("pending", state.isLoading);
     });
     builder.addCase(postData.fulfilled, (state, action) => {
-      state.todos = action.payload;
-      state.isLoading = true;
-      console.log(state, action);
+      state.todos.push(action.payload);
+      state.isLoading = false;
+      alert("todo 추가가 완료되었습니다.");
+      console.log("fulfilled : ", state);
     });
-    builder.addCase(postData.rejected, (state, action) => {
+    builder.addCase(postData.rejected, (state) => {
+      state.isLoading = false;
       console.log("error");
-    }); */
+    });
 
     /* ----------- updateData(Todo 수정) ---------------- */
-    /*     builder.addCase(updateData.pending, (state, { payload }) => {
-      //state.todos = payload;
+    builder.addCase(updateData.pending, (state) => {
+      state.isLoading = true;
       console.log("pending");
     });
     builder.addCase(updateData.fulfilled, (state, action) => {
-      state.todos = action.payload;
-      state.isLoading = true;
-      console.log(state, action);
+      state.isLoading = false;
+      /*  state.todos[index] = action.payload; */
+      console.log("fulfilled : ", state);
     });
-    builder.addCase(updateData.rejected, (state, action) => {
+    builder.addCase(updateData.rejected, (state) => {
+      state.isLoading = false;
       console.log("error");
-    }); */
+    });
 
     /* ----------- deleteData(Todo 삭제) ---------------- */
-    /*     builder.addCase(deleteData.pending, (state, { payload }) => {
-      //state.todos = payload;
+    builder.addCase(deleteData.pending, (state) => {
+      state.isLoading = true;
       console.log("pending");
     });
     builder.addCase(deleteData.fulfilled, (state, action) => {
-      state.todos = action.payload;
-      state.isLoading = true;
-      console.log(state, action);
+      state.isLoading = false;
+      state.todos = state.todos.filter((todo) => todo.id !== action.payload);
+      console.log("fulfilled :", state);
     });
-    builder.addCase(deleteData.rejected, (state, action) => {
+    builder.addCase(deleteData.rejected, (state) => {
+      state.isLoading = false;
       console.log("error");
-    }); */
+    });
   },
 });
 

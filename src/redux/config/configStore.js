@@ -1,13 +1,12 @@
 // createStore is not recommended para
-import { createStore } from "redux";
-import { combineReducers } from "redux";
+import { configureStore } from "@reduxjs/toolkit";
+import logger from "redux-logger";
 import todos from "../modules/todos";
+import comment from "../modules/comment";
 
-const rootReducer = combineReducers({
-  todos,
+const store = configureStore({
+  reducer: { todos },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({ serializableCheck: false }).concat(logger),
 });
-
-// 위 작업을 변수에 넣고 export
-const store = createStore(rootReducer);
-
 export default store;
