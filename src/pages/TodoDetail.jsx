@@ -1,123 +1,152 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../components/layout/Header";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+// import { useNavigate } from "react-router-dom";
+// import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { addComment } from "../redux/modules/comment";
+// import {
+//   __getComment,
+//   __addComment,
+//   __deleteComment,
+// } from "../redux/modules/comment";
 
 const TodoDetail = () => {
-  const nav = useNavigate();
-  const dispatch = useDispatch();
+  // const nav = useNavigate();
+  // const dispatch = useDispatch();
+  // const { isLoading, error, comment } = useSelector((state) => state.comments);
 
-  const [inputs, setInputs] = useState({
-    id: new Date().getTime(),
-    commentTitle: "",
-    commentBody: "",
-  });
+  // const [inputs, setInputs] = useState({
+  //   id: new Date().getTime(),
+  //   commentTitle: "",
+  //   commentBody: "",
+  // });
 
-  const { commentTitle, commentBody } = inputs;
+  // useEffect(() => {
+  //   dispatch(__getComment());
+  // }, [dispatch]);
 
-  const onChange = (e) => {
-    const { value, name } = e.target;
-    setInputs({ ...inputs, [name]: value });
-  };
+  // if (isLoading) {
+  //   return <div>로딩 중....</div>;
+  // }
 
-  const submithandler = (e) => {
-    e.preventDefault();
-    if (inputs.commentTitle.trim() === "" || inputs.commentBody.trim() === "") {
-      return alert("Please enter a comment");
-    }
-    dispatch(addComment(inputs));
+  // if (error) {
+  //   return <div>{error.message}</div>;
+  // }
+  // const { commentTitle, commentBody } = inputs;
 
-    setInputs({
-      commentTitle: "",
-      commentBody: "",
-    });
-  };
-  return (
-    <>
-      <Header />
+  // const onChange = (e) => {
+  //   const { value, name } = e.target;
+  //   setInputs({ ...inputs, [name]: value });
+  // };
 
-      <TodoDetailWrapWidth>
-        <DivInnerBox padding="10px" size="1.5em">
-          id :
-        </DivInnerBox>
-        <TodoDetailBtn
-          onClick={() => nav("/todolist")}
-          margin="5px"
-          padding="10px"
-          font="1.5em"
-        >
-          이전으로
-        </TodoDetailBtn>
-      </TodoDetailWrapWidth>
+  // const submithandler = (e) => {
+  //   e.preventDefault();
+  //   if (inputs.commentTitle.trim() === "" || inputs.commentBody.trim() === "") {
+  //     return alert("Please enter a comment");
+  //   }
+  //   dispatch(__addComment(inputs));
 
-      <TodoDetailWrapHeight>
-        <HomeH1 font="1.7em">제목</HomeH1>
+  //   setInputs({
+  //     id: new Date().getTime(),
+  //     commentTitle: "",
+  //     commentBody: "",
+  //   });
+  // };
 
-        <DivInnerBox padding="20px" size="1.5em" width="90%" height="200px">
-          내용
-        </DivInnerBox>
+  // const deletehandler = (id) => {
+  //   dispatch(__deleteComment(id));
+  // };
 
-        <TodoDetailBtn width="95%" margin="10px" padding="10px" font="1em">
-          수정하기
-        </TodoDetailBtn>
-      </TodoDetailWrapHeight>
+  return;
+  // <>
+  //   <Header />
 
-      {/*  모달 ? 보이기? */}
-      <CommentContainer>
-        <HomeH1 font="1.7em">댓글창</HomeH1>
-        <CommentForm onSubmit={submithandler}>
-          <CommentInputbox>
-            <CommentInput
-              type="text"
-              width="150px"
-              padding="5px"
-              height="30px"
-              name="commentTitle"
-              value={commentTitle}
-              onChange={onChange}
-            />
-            <CommentInput
-              type="text"
-              width="1000px"
-              padding="5px"
-              height="30px"
-              name="commentBody"
-              value={commentBody}
-              onChange={onChange}
-            />
-          </CommentInputbox>
+  //   <TodoDetailWrapWidth>
+  //     <DivInnerBox padding="10px" size="1.5em">
+  //       id :
+  //     </DivInnerBox>
+  //     <TodoDetailBtn
+  //       onClick={() => nav("/todolist")}
+  //       margin="5px"
+  //       padding="10px"
+  //       font="1.5em"
+  //     >
+  //       이전으로
+  //     </TodoDetailBtn>
+  //   </TodoDetailWrapWidth>
 
-          <TodoDetailBtn
-            width="100%"
-            height="42px"
-            padding="auto"
-            margin="auto"
-          >
-            추가하기
-          </TodoDetailBtn>
-        </CommentForm>
+  //   <TodoDetailWrapHeight>
+  //     <HomeH1 font="1.7em">제목</HomeH1>
 
-        <CommentList>
-          <CommentBoxWarp>
-            <CommentBox width="100%" padding="10px">
-              <DivInnerBox padding="5px" size="0.75em">
-                닉네임
-              </DivInnerBox>
-              <DivInnerBox padding="5px" size="1em">
-                코멘트
-              </DivInnerBox>
-            </CommentBox>
-            <CommentBtnWarp>
-              <TodoDetailBtn>수정하기 버튼</TodoDetailBtn>
-              <TodoDetailBtn>삭제하기 버튼</TodoDetailBtn>
-            </CommentBtnWarp>
-          </CommentBoxWarp>
-        </CommentList>
-      </CommentContainer>
-    </>
-  );
+  //     <DivInnerBox padding="20px" size="1.5em" width="90%" height="200px">
+  //       내용
+  //     </DivInnerBox>
+
+  //     <TodoDetailBtn width="95%" margin="10px" padding="10px" font="1em">
+  //       수정하기
+  //     </TodoDetailBtn>
+  //   </TodoDetailWrapHeight>
+
+  //   {/*  모달 ? 보이기? */}
+  //   <CommentContainer>
+  //     <HomeH1 font="1.7em">댓글창</HomeH1>
+  //     <CommentForm onSubmit={submithandler}>
+  //       <CommentInputbox>
+  //         <CommentInput
+  //           type="text"
+  //           width="150px"
+  //           padding="5px"
+  //           height="30px"
+  //           name="commentTitle"
+  //           value={commentTitle}
+  //           onChange={onChange}
+  //         />
+  //         <CommentInput
+  //           type="text"
+  //           width="900px"
+  //           padding="5px"
+  //           height="30px"
+  //           name="commentBody"
+  //           value={commentBody}
+  //           onChange={onChange}
+  //         />
+  //       </CommentInputbox>
+
+  //       <CommentBtnWarp>
+  //         <TodoDetailBtn
+  //           width="200px"
+  //           height="42px"
+  //           font="15px"
+  //           margin="20px"
+  //         >
+  //           추가하기
+  //         </TodoDetailBtn>
+  //       </CommentBtnWarp>
+  //     </CommentForm>
+
+  //     <CommentList>
+  //       {comment?.map((comment) => (
+  //         <CommentBoxWarp key={comment.id}>
+  //           <CommentBox width="100%" padding="10px">
+  //             <DivInnerBox padding="5px" size="0.75em">
+  //               {comment.commentTitle}
+  //             </DivInnerBox>
+  //             <DivInnerBox padding="5px" size="1em">
+  //               {comment.commentBody}
+  //             </DivInnerBox>
+  //           </CommentBox>
+  //           <CommentBtnWarp>
+  //             <TodoDetailBtn>수정하기 버튼</TodoDetailBtn>
+  //             <TodoDetailBtn onClick={() => deletehandler(comment.id)}>
+  //               삭제하기 버튼
+  //             </TodoDetailBtn>
+  //           </CommentBtnWarp>
+  //         </CommentBoxWarp>
+  //       ))}
+
+  //       {/*  */}
+  //     </CommentList>
+  //   </CommentContainer>
+  // </>
 };
 
 export default TodoDetail;
@@ -166,7 +195,7 @@ const TodoDetailBtn = styled.button`
   border: 0.02em solid tomato;
   border-radius: 10px;
   color: #ff9574;
-  width: ${({ width }) => width};
+  min-width: ${({ width }) => width};
   height: ${({ height }) => height};
 `;
 
@@ -179,6 +208,7 @@ const CommentContainer = styled.div`
 
 const CommentForm = styled.form`
   display: flex;
+  border: 1px solid orange;
   margin: 10px;
   flex-direction: row;
   justify-content: space-between;
@@ -187,6 +217,8 @@ const CommentForm = styled.form`
 
 const CommentInputbox = styled.div`
   display: flex;
+  flex-flow: row nowrap;
+  width: 95%;
   gap: 10px;
   margin: 10px;
 `;

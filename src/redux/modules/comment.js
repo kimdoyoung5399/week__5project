@@ -1,25 +1,21 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
 // initialState
-const initialState = [
-  {
-    id: 0,
-    commentTitle: "",
-    commentBody: "",
-  },
-];
+const initialState = {
+  comment: [],
+  isLoading: false,
+  error: null,
+};
 
 // Reducer
 const commentSlice = createSlice({
   name: "comment",
   initialState,
-  reducers: {
-    addComment: (state, action) => {
-      console.log(state[0]);
-    },
-  },
+  reducers: {},
+  extraReducers: {},
 });
 
-export const { addComment } = commentSlice.actions;
+export const {} = commentSlice.actions;
 
 export default commentSlice.reducer;

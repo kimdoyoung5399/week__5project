@@ -1,61 +1,57 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Header from "../components/layout/Header";
-import { addTodo } from "../redux/modules/todos";
 import nextId from "react-id-generator";
 
 const Form = () => {
-  const dispatch = useDispatch();
+  const [todos, setTodos] = useState([
+    {
+      id: 1,
+      username: "작성자",
+      title: "이런",
+      body: "홧팅",
+    },
+    {
+      id: 2,
+      username: "작성자",
+      title: "이런",
+      body: "홧팅",
+    },
+  ]);
+
   const [inputs, setInputs] = useState({
-    userName: "",
+    id: 0,
+    username: "",
     title: "",
     body: "",
   });
-  const { userName, title, body } = inputs;
 
-  const changeHandler = (e) => {
-    const { name, value } = e.target;
-    setInputs({
-      ...inputs,
-      [name]: value,
-    });
+  const { username, title, body } = inputs;
+
+  const onChange = (e) => {
+    const { value, name } = e.target;
+    setInputs(...inputs, { [name]: value });
   };
-  console.log("inputs:", inputs);
 
-  const submitHandler = (e) => {
-    const id = nextId(); // 제출하기 했을 때만 id값이 증가하도록 안에 넣어야 함
+  const formonSumbit = (e) => {
     e.preventDefault();
-    if (inputs.userName === "" || inputs.title === "" || inputs.body === "") {
-      window.alert("입력하세요");
-      return;
+    if (username.trim() === "" || title.trim() === "" || body.trim() === "") {
+      alert("Please enter a text");
     }
-    console.log("id:", id);
-    dispatch(
-      addTodo({
-        id,
-        ...inputs,
-      })
-    );
-    setInputs({
-      userName: "",
-      title: "",
-      body: "",
-    });
   };
 
   return (
     <>
       <Header />
-      <FormWrap onSubmit={submitHandler}>
-        <FormInputWrap>
+      <FormWrap>
+        <FormInputWrap onSubmit={formonSumbit}>
           <label htmlFor="">작성자</label>
           <br />
           <FormInput
             type="text"
-            name="userName"
-            value={userName}
-            onChange={changeHandler}
+            name="username"
+            value={username}
+            onChange={onChange}
           />
         </FormInputWrap>
         <FormInputWrap>
@@ -65,18 +61,13 @@ const Form = () => {
             type="text"
             name="title"
             value={title}
-            onChange={changeHandler}
+            onChange={onChange}
           />
         </FormInputWrap>
         <FormInputWrap>
           <label htmlFor="">내용</label>
           <br />
-          <FormInput
-            type="text"
-            name="body"
-            value={body}
-            onChange={changeHandler}
-          />
+          <FormInput type="text" name="body" value={body} onChange={onChange} />
         </FormInputWrap>
         <FormBtnWrap>
           <FormBtn>작성하기</FormBtn>

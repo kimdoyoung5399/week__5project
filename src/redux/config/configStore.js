@@ -5,7 +5,7 @@ import { configureStore } from "@reduxjs/toolkit";
  * import 해온 것은 slice.reducer 입니다.
  */
 import todos from "../modules/todos";
-import comment from "../modules/comment";
+import comments from "../modules/comment";
 
 /**
  * 모듈(Slice)이 여러개인 경우
@@ -16,8 +16,8 @@ import comment from "../modules/comment";
  */
 const store = configureStore({
   reducer: {
-    todos: todos,
-    comment,
+    todos,
+    comments,
   },
 });
 

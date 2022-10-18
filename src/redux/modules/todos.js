@@ -1,21 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-  todos: [
-    {
-      id: 0,
-      userName: "",
-      title: "",
-      body: "",
-    },
-  ],
-  todo: {
-    id: 0,
-    userName: "",
-    title: "",
-    body: "",
-  },
-};
+const initialState = [];
 
 const todosSlice = createSlice({
   name: "todos",

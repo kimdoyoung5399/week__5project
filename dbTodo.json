@@ -2,16 +2,16 @@
   "todos": [
     {
       "id": 1,
-      "author": "typicode",
+      "username": "typicode",
       "title": "json-server",
       "content": "호호호호"
     }
   ],
   "comments": [
     {
-      "postId": 1,
-      "user": "하이용",
-      "body": "쿠쿠루삥뽕"
+      "id": 1,
+      "commentTitle": "하이용",
+      "commentBody": "쿠쿠루삥뽕"
     }
   ]
 }
