@@ -74,7 +74,7 @@ const Form = () => {
           <FormInput
             type="text"
             name="content"
-            value={content}
+            value={content} 
             onChange={changeHandler}
           />
         </FormInputWrap>
