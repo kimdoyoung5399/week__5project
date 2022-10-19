@@ -1,45 +1,78 @@
 import React from "react";
 import Header from "../components/layout/Header";
 import styled from "styled-components";
+import "../App.scss";
 import { useNavigate } from "react-router-dom";
+import { FcTodoList, FcFile } from "react-icons/fc";
 
 const Home = () => {
   const nav = useNavigate();
 
   return (
-    <>
-      <Header />
-      <HomeDiv>
-        <HomeH1>무엇을 할까요?</HomeH1>
-        <HomeBtn onClick={() => nav("/form")}>할일 기록하기</HomeBtn>
-        <HomeBtn onClick={() => nav("/todolist")}>TodoList</HomeBtn>
-      </HomeDiv>
-    </>
+    <BaseWraper>
+      <BaseContainer>
+        <Header />
+        <HomeBtnWrap>
+          <HomeBtn onClick={() => nav("/form")}>
+            <FcFile />
+            &nbsp;WRITING
+          </HomeBtn>
+          <HomeBtn onClick={() => nav("/todolist")}>
+            <FcTodoList />
+            &nbsp;TODOLIST
+          </HomeBtn>
+        </HomeBtnWrap>
+      </BaseContainer>
+    </BaseWraper>
   );
 };
 
 export default Home;
 
-const HomeDiv = styled.div`
-  margin: 10px;
+const BaseWraper = styled.div`
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+`;
+
+const BaseContainer = styled.div`
+  max-width: 1200px;
+  min-width: 800px;
+  max-height: 100vh;
+  margin: 20px auto;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.61);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+`;
+
+const HomeBtnWrap = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const HomeBtn = styled.button`
-  width: 95%;
-  height: 150px;
+  width: 45%;
+  height: 300px;
   margin: 20px;
-  padding: 0 0 0 30px;
+  color: var($text-main);
+  /* color: rgb(103, 124, 241); */
   text-align: left;
+  font-weight: bold;
   font-size: 1.5em;
-  background-color: transparent;
-  border: 0.02em solid tomato;
+  background-color: rgba(142, 157, 243, 0.226);
+  border: none;
   border-radius: 10px;
-  color: #ff9574;
-`;
-
-const HomeH1 = styled.h1`
-  color: tomato;
-  padding: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  &:hover {
+    border: 5px solid rgb(103, 124, 241);
+  }
 `;

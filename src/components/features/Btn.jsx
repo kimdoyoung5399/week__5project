@@ -7,11 +7,6 @@ const SIZES = {
     --button-padding: 8px 12px;
     --button-readius: 4px;
   `,
-  md: css`
-    --button-font-size: 1rem;
-    --button-padding: 12px 16px;
-    --button-readius: 8px;
-  `,
   lg: css`
     --button-font-size: 1.25rem;
     --button-padding: 16px 20px;
@@ -36,17 +31,22 @@ const StyleBtn = styled.button`
   margin: 0;
   border: none;
   cursor: pointer;
-  font-family: "Noto Sans KR", sans-serif;
-  font-size: var(--button-font-size, 1rem);
+  font-size: 1em;
+  font-weight: 400;
   padding: var(--button-padding, 12px 16px);
-  border-radius: var(--button-radius, 8px);
-  color: var(--button-color, #ffffff);
-  background: var(--button-bg-color, #0d6efd);
+  height: 2rem;
+  width: 30rem;
+  border-radius: var(--button-radius, 5px);
+  color: var(--button-color, black);
+  background: var(--button-bg-color, #b7c2fa);
 
-  &:active,
+  &:active {
+    box-shadow: inset 0rem -0.5rem 1rem #b7c2fa;
+  }
   &:hover,
   &:focus {
-    background: var(--button-hover-bg-color, #025ce2);
+    background: rgb(103, 124, 241);
+    color: white;
   }
 
   &:disabled {
