@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "../App.scss";
 import styled from "styled-components";
 import { FaReply } from "react-icons/fa";
 import { FaSlackHash } from "react-icons/fa";
@@ -24,11 +25,9 @@ const TodoDetailList = ({ comment }) => {
     dispatch(__deleteComments(comment));
   };
 
-  const onEdit = () => {};
-
   return (
     <div>
-      <DivInnerBox padding="5px" size="0.75em">
+      {/* <DivInnerBox padding="5px" size="0.75em">
         {comment.user}
       </DivInnerBox>
       <DivInnerBox padding="5px" size="1em">
@@ -37,7 +36,7 @@ const TodoDetailList = ({ comment }) => {
       <CommentBtnWarp>
         <TodoDetailBtn>수정</TodoDetailBtn>
         <TodoDetailBtn onClick={onDelete}>삭제</TodoDetailBtn>
-      </CommentBtnWarp>
+      </CommentBtnWarp> */}
     </div>
   );
 };
@@ -57,6 +56,12 @@ const TodoDetail = () => {
   console.log(todos);
 
   const todo = todos.find((todo) => todo.id === +id);
+
+  const [isEdit, setIsEdit] = useState(false);
+
+  const toggleEdit = () => {
+    setIsEdit(!isEdit);
+  };
 
   /* comment 데이터 관련 */
   const [inputs, setInputs] = useState({
@@ -105,7 +110,6 @@ const TodoDetail = () => {
             <FaReply />
           </TodoDetailBtn>
         </TodoDetailWrapWidth>
-
         <TodoDetailWrapHeight>
           <HomeH1 font="1.7em" color="white">
             {todo?.author}
@@ -113,17 +117,26 @@ const TodoDetail = () => {
           <HomeH1 size="1.5em" color="white">
             {todo?.title}
           </HomeH1>
-          <HomeH1 size="1.3em" color="white">
-            {todo?.content}
-          </HomeH1>
-          <TodoDetailBtn width="95%" margin="10px" padding="10px" font="1em">
+          {/* content <-> textarea */}
+          {isEdit == true ? (
+            <DivTextArea placeholder={todo?.content} />
+          ) : (
+            <DivContent>{todo?.content}</DivContent>
+          )}
+
+          <TodoDetailBtn
+            width="95%"
+            margin="10px"
+            padding="10px"
+            font="1em"
+            onClick={() => toggleEdit()}>
             수정하기
           </TodoDetailBtn>
         </TodoDetailWrapHeight>
 
         {/* 모달 ? 보이기? */}
-        <CommentContainer>
-          <HomeH1 font="1.7em">댓글창</HomeH1>
+        <div className="commentModal isnotActive">
+          {/* <HomeH1 font="1.7em">댓글창</HomeH1>
           <CommentForm onSubmit={onSubmit}>
             <CommentInputbox>
               <CommentInput
@@ -163,8 +176,8 @@ const TodoDetail = () => {
                 ))}
               </CommentBox>
             </CommentBoxWarp>
-          </CommentList>
-        </CommentContainer>
+          </CommentList> */}
+        </div>
       </BaseContainer>
     </>
   );
@@ -221,20 +234,19 @@ const DivInnerBox = styled.div`
   color: rgb(103, 124, 241);
 `;
 
-const DivInput = styled.input`
-  padding: ${({ padding }) => padding};
-  font-size: ${({ size }) => size};
+const DivContent = styled.div`
+  padding: 10px;
+  font-size: 3rem;
   width: ${({ width }) => width};
-  height: ${({ height }) => height};
-  color: rgb(103, 124, 241);
+  height: 200px;
+  color: white;
 `;
 
 const DivTextArea = styled.textarea`
-  padding: ${({ padding }) => padding};
-  font-size: ${({ size }) => size};
-  width: ${({ width }) => width};
-  height: ${({ height }) => height};
-  color: tomato;
+  width: 400px;
+  height: 200px;
+  font-size: 1.2rem;
+  color: black;
 `;
 
 const TodoDetailBtn = styled.button`
@@ -249,11 +261,12 @@ const TodoDetailBtn = styled.button`
 `;
 
 const CommentContainer = styled.div`
-  display: flex;
+  width: inherit;
+  height: 500px;
+  background-color: white;
+  border-radius: 0 15px 15px 0;
   flex-direction: column;
-  margin: 10px;
-  gap: 10px;
-  display: none;
+  display: inline;
 `;
 
 const CommentForm = styled.form`

@@ -1,12 +1,6 @@
 {
   "todos": [
     {
-      "id": 1,
-      "author": "asdfdf",
-      "title": "adf",
-      "content": "sdf"
-    },
-    {
       "id": 1666101411565,
       "author": "ㅇㄹ",
       "title": "ㅇ",
@@ -17,6 +11,18 @@
       "author": "작성자",
       "title": "제목",
       "content": "내용"
+    },
+    {
+      "id": 1666140105901,
+      "author": "ex author",
+      "title": "ex title",
+      "content": "ex content"
+    },
+    {
+      "id": 1666144402101,
+      "author": "d",
+      "title": "ddd",
+      "content": "ddd"
     }
   ],
   "comments": [
@@ -25,6 +31,11 @@
       "postId": "",
       "user": "",
       "body": ""
+    },
+    {
+      "user": "",
+      "body": "",
+      "id": "1666140105901"
     }
   ]
 }

@@ -1,4 +1,4 @@
-import "../../App.css";
+import "../../App.scss";
 import React from "react";
 import styled from "styled-components";
 import { FaHome } from "react-icons/fa";

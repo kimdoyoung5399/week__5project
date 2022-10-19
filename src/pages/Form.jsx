@@ -32,7 +32,6 @@ const Form = () => {
     }
     if (inputs.author.length < 2 || inputs.author.length > 13) {
       window.alert("작성자는 3자 이상 13자 이하의 이름으로 이루어져야 합니다.");
-      return inputs.author == null;
     }
     console.log("id:", id);
     dispatch(
