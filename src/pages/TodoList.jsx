@@ -121,7 +121,6 @@ const StButton = styled.button`
   border-radius: 7px;
   //justify-content: left;
   display: inline;
-
   :active {
     box-shadow: inset 2px 2px 2px 2px #2424243e;
   }
