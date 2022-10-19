@@ -25,35 +25,85 @@ $rad-main: 15px;
 
 /* box-shadow */
 $shadow-base: 0 8px 32px 0 rgba(31, 38, 135, 0.61);
+$shadow-black: 0 8px 32px 0 rgba(0, 0, 0, 0.61);
 
 /* ------------------------------------------------------------------------------------------------ */
 
-.commentModal {
-  width: 800px;
-  //height: 500px;
-  background-color: white;
-  border-radius: 15px 15px 15px 15px;
-  flex-direction: column;
-  display: flex;
-  transition: height 0.4s;
-  z-index: 100;
-
-  &.isActive {
-    height: 500px;
-    display: none;
-  }
-  &.isnotActive {
-    height: 50px;
-    //
-    display: none;
-  }
+.before {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  height: 50px;
 }
 
+.after {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  height: 400px;
+  transition: height 1s;
+}
 .CommentContainer {
-  width: inherit;
-  height: 500px;
-  background-color: white;
-  border-radius: 0 15px 15px 0;
+  display: flex;
   flex-direction: column;
+  margin: 10px;
+  gap: 10px;
+  height: 400px;
+  bottom: 0;
+  transition: height 1s;
+}
+
+.CommentBar {
+  width: inherit;
+  height: 50px;
+  padding: auto 0;
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: $shadow-black;
+  flex-direction: column;
+  display: absolute;
+  bottom: 0;
+}
+
+.ContentsModalBg {
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  z-index: 100 !important;
+  //backdrop-filter: blur(4px);
+}
+
+.ContentsModal {
+  width: ($max-width / 2);
+  height: 400px;
+  margin: 15% auto;
+  background-color: $bg-base;
+  border-radius: $rad-main;
+  box-shadow: $shadow-black;
+}
+
+.ex {
+  width: 70px;
+  height: 30px;
+  margin-right: 10px;
+  margin-bottom: 60px;
+  padding: 8px;
+  font-size: 0.8rem;
+  color: #ffffff;
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 255);
+  background-color: #e73737;
+  box-shadow: 0 4px 9px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(9px);
+  -webkit-backdrop-filter: blur(9px);
+  border: none;
+  border-radius: 7px;
+  //justify-content: left;
   display: inline;
+
+  :active {
+    box-shadow: inset 2px 2px 2px 2px #2424243e;
+  }
 }

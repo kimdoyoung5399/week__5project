@@ -1,4 +1,5 @@
 import React from "react";
+import "../App.scss";
 import Header from "../components/layout/Header";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
