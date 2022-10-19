@@ -1,57 +1,57 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React from "react";
 import styled from "styled-components";
 import Header from "../components/layout/Header";
 import { postData } from "../redux/modules/todos";
 import nextId from "react-id-generator";
+import { useDispatch } from "react-redux";
+import useInput from "../hooks/useInput";
+import { useNavigate } from "react-router-dom";
 
 const Form = () => {
   const dispatch = useDispatch();
-  const [inputs, setInputs] = useState({
-    author: "",
-    title: "",
-    content: "",
-  });
-  const { author, title, content } = inputs;
+  const nav = useNavigate();
 
-  const changeHandler = (e) => {
-    const { name, value } = e.target;
-    setInputs({
-      ...inputs,
-      [name]: value,
-    });
+  const [author, authorChange, authorReset] = useInput("");
+  const [title, titleChange, titleReset] = useInput("");
+  const [content, contentChange, contentReset] = useInput("");
+
+  const onCheckEnter = (e) => {
+    if (e.key === "Enter") {
+      submitHandler();
+    }
   };
-  console.log("inputs:", inputs);
 
   const submitHandler = (e) => {
     const id = nextId(); // 제출하기 했을 때만 id값이 증가하도록 안에 넣어야 함
     e.preventDefault();
-    if (inputs.author === "" || inputs.title === "" || inputs.content === "") {
-      window.alert("입력하세요");
+    if (author === "" || title === "" || content === "") {
+      window.alert("양식을 모두 작성해주세요.");
       return;
-    }
-    if (inputs.author.length < 2 || inputs.author.length > 13) {
-      window.alert("작성자는 3자 이상 13자 이하의 이름으로 이루어져야 합니다.");
+    } else if (content.length < 10) {
+      window.alert("내용을 10글자 이상 입력해주세요.");
+      return;
     }
     console.log("id:", id);
     dispatch(
       postData({
         id: Date.now(),
-        ...inputs,
+        author,
+        title,
+        content,
       })
     );
-    setInputs({
-      author: "",
-      title: "",
-      content: "",
-    });
+    // input 값 reset
+    authorReset();
+    titleReset();
+    contentReset();
+    nav("/TodoList"); // 페이지 전환하기
   };
 
   return (
     <>
       <Header />
       <BaseContainer>
-        <FormWrap onSubmit={submitHandler}>
+        <FormWrap onKeyPress={onCheckEnter}>
           <FormInputWrap>
             <label htmlFor="">작성자</label>
             <br />
@@ -59,7 +59,7 @@ const Form = () => {
               type="text"
               name="author"
               value={author}
-              onChange={changeHandler}
+              onChange={authorChange}
               required
             />
           </FormInputWrap>
@@ -70,7 +70,7 @@ const Form = () => {
               type="text"
               name="title"
               value={title}
-              onChange={changeHandler}
+              onChange={titleChange}
               required
             />
           </FormInputWrap>
@@ -81,12 +81,12 @@ const Form = () => {
               type="text"
               name="content"
               value={content}
-              onChange={changeHandler}
+              onChange={contentChange}
               required
             />
           </FormInputWrap>
           <FormBtnWrap>
-            <FormBtn>작성하기</FormBtn>
+            <FormBtn onClick={submitHandler}>작성하기</FormBtn>
           </FormBtnWrap>
         </FormWrap>
       </BaseContainer>
@@ -151,7 +151,6 @@ const FormBtn = styled.button`
   box-shadow: 0.3rem 0.3rem 0.3rem #a1a7aa99;
   cursor: pointer;
   &:hover {
-    background-color: #103fa3;
     color: #ffffff;
   }
   &:active {

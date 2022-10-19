@@ -41,7 +41,7 @@ export const postData = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const res = await axios.post("http://localhost:3001/todos", payload);
-      console.log(res);
+      console.log("post res:", res);
       /* thunkAPI로 payload가 undefined가 뜰 수 있기 때문에 안전하게 직접 경로로 보내주자 */
       return thunkAPI.fulfillWithValue(res.data);
     } catch (err) {
@@ -55,9 +55,13 @@ export const postData = createAsyncThunk(
 
 export const updateData = createAsyncThunk(
   "todos/updateData",
-  async (todoId, thunkAPI) => {
+  async (payload, thunkAPI) => {
+    console.log("여기payload:", payload);
     try {
-      const res = await axios.patch(`http://localhost:3001/todos/${todoId}`);
+      const res = await axios.patch(
+        `http://localhost:3001/todos/${payload.id}`,
+        payload
+      );
       console.log(res);
       /* thunkAPI로 payload가 undefined가 뜰 수 있기 때문에 안전하게 직접 경로로 보내주자 */
       return thunkAPI.fulfillWithValue(res.data);
@@ -74,9 +78,8 @@ export const deleteData = createAsyncThunk(
   "todos/deleteData",
   async (todoId, thunkAPI) => {
     try {
-      const res = await axios.delete(`http://localhost:3001/todos/${todoId}`);
+      await axios.delete(`http://localhost:3001/todos/${todoId}`);
       //const todoData = res.data;
-      console.log(res);
       /* thunkAPI로 payload가 undefined가 뜰 수 있기 때문에 안전하게 직접 경로로 보내주자 */
       return thunkAPI.fulfillWithValue(todoId);
     } catch (err) {
@@ -141,7 +144,10 @@ const todosSlice = createSlice({
     });
     builder.addCase(updateData.fulfilled, (state, action) => {
       state.isLoading = false;
-      /*  state.todos[index] = action.payload; */
+      const idx = state.todos.findIndex(
+        (todo) => todo.id === action.payload.id
+      );
+      state.todos[idx] = action.payload;
       console.log("fulfilled : ", state);
     });
     builder.addCase(updateData.rejected, (state) => {

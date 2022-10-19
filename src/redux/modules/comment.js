@@ -4,9 +4,11 @@ import axios from "axios";
 // Thunk
 export const __getComments = createAsyncThunk(
   "comments/getComments",
-  async (payload, thunkAPI) => {
+  async (_, thunkAPI) => {
+    // console.log("aaapayload:", payload);
     try {
-      const data = await axios.get("http://localhost:3001/comments");
+      const data = await axios.get(`http://localhost:3001/comments/`);
+      console.log("data:", data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -32,7 +34,7 @@ export const __deleteComments = createAsyncThunk(
   async (payload, thunkAPI) => {
     console.log("id, postId:", payload);
     try {
-      await axios.delete(`http://localhost:3001/comments/${payload}`);
+      await axios.delete(`http://localhost:3001/comments/${payload.id}`);
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -40,23 +42,30 @@ export const __deleteComments = createAsyncThunk(
   }
 );
 
-// export const __editComments = createAsyncThunk(
-// 'comments/editComments',
-// async (postId, thunkAPI) => {
-// try {
-// const data = await axios.patch(`http://localhost:3001/comments/${postId}`)
-// }
-// }
-// )
+export const __editComments = createAsyncThunk(
+  "comments/editComments",
+  async (payload, thunkAPI) => {
+    // console.log()
+    try {
+      const data = await axios.patch(
+        `http://localhost:3001/comments/${payload.id}`,
+        payload
+      );
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 
 //initialState
 const initialState = {
   comments: [
     {
-      id: 0,
-      postId: 0,
       user: "",
       body: "",
+      id: "0",
+      todoId: 0,
     },
   ],
   isLoading: false,
@@ -99,11 +108,26 @@ export const commentSlice = createSlice({
     builder.addCase(__deleteComments.fulfilled, (state, action) => {
       console.log("delete부분:", state, action);
       state.isLoading = false;
-      state.comments = state.comments.filter(
-        (comment) => comment.id !== action.payload
+      const idx = state.comments.findIndex(
+        (comment) => comment.todoId === action.payload.todoId
       );
+      state.comments.splice(idx, 1);
     });
     builder.addCase(__deleteComments.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    });
+    builder.addCase(__editComments.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(__editComments.fulfilled, (state, action) => {
+      state.isLoading = false;
+      const idx = state.comments.findIndex(
+        (comment) => comment.id === action.payload.id
+      );
+      state.comments.splice(idx, 1, action.payload);
+    });
+    builder.addCase(__editComments.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     });
@@ -111,3 +135,5 @@ export const commentSlice = createSlice({
 });
 
 export default commentSlice.reducer;
+
+// id값을 확인해서 인덱스 찾아서 그 부분을 수정하도록

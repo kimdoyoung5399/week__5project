@@ -1,8 +1,7 @@
-// createStore is not recommended para
 import { configureStore } from "@reduxjs/toolkit";
-import logger from "redux-logger";
-import todos from "../modules/todos";
 import comments from "../modules/comment";
+import todos from "../modules/todos";
+import logger from "redux-logger";
 
 const store = configureStore({
   reducer: { todos, comments },

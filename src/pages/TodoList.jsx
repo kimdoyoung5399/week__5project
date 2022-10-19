@@ -12,13 +12,15 @@ const TodoList = () => {
   const { todos, isLoading } = useSelector((state) => state.todos);
   const dispatch = useDispatch();
 
-  const dropItem = (id) => {
-    dispatch(deleteData(id));
-  };
-
   useEffect(() => {
     dispatch(getData());
   }, [dispatch]);
+
+  const deleteTodo = (todo) => {
+    console.log("todo:", todo.id);
+    const todoId = todo.id;
+    dispatch(deleteData(todoId));
+  };
 
   console.log(todos);
 
@@ -40,7 +42,7 @@ const TodoList = () => {
                   <TodoListBtn size="1em" padding="10px" margin="10px">
                     {todo.title}
                   </TodoListBtn>
-                  <StButton onClick={() => dropItem(todo.id)}>
+                  <StButton onClick={() => deleteTodo(todo.id)}>
                     <FaTrashAlt size="20px" />
                   </StButton>
                 </DivInnerWarp>
@@ -137,13 +139,12 @@ const StButton = styled.button`
   border-radius: 7px;
   justify-content: right;
   display: inline;
-
   :active {
     box-shadow: inset 2px 2px 2px 2px #2424243e;
   }
 `;
 
-const StButton2 = styled(StButton)`
-  margin-right: 5px !important;
-  background-color: #0bc041;
-`;
+// const StButton2 = styled(StButton)`
+//   margin-right: 5px !important;
+//   background-color: #0bc041;
+// `;

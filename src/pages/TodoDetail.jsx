@@ -6,179 +6,100 @@ import { FaSlackHash } from "react-icons/fa";
 import Header from "../components/layout/Header";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { getData, patchData } from "../redux/modules/todos";
-import {
-  __addComments,
-  __deleteComments,
-  __getComments,
-} from "../redux/modules/comment";
-
-const TodoDetailList = ({ comment }) => {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(__getComments());
-  }, [dispatch]);
-
-  const onDelete = (e) => {
-    e.preventDefault();
-    dispatch(__deleteComments(comment));
-  };
-
-  return (
-    <div>
-      {/* <DivInnerBox padding="5px" size="0.75em">
-        {comment.user}
-      </DivInnerBox>
-      <DivInnerBox padding="5px" size="1em">
-        {comment.body}
-      </DivInnerBox>
-      <CommentBtnWarp>
-        <TodoDetailBtn>수정</TodoDetailBtn>
-        <TodoDetailBtn onClick={onDelete}>삭제</TodoDetailBtn>
-      </CommentBtnWarp> */}
-    </div>
-  );
-};
+import { getData, updateData } from "../redux/modules/todos";
+import Comments from "../components/detailComments/comments";
 
 const TodoDetail = () => {
   const nav = useNavigate();
   const dispatch = useDispatch();
-  const { todos } = useSelector((state) => state.todos);
-  const { comments } = useSelector((state) => state.comments);
   const { id } = useParams();
 
-  /* todos 데이터 관련 */
+  const { todos } = useSelector((state) => state.todos);
+  const todo = todos.find((todo) => todo.id === +id);
 
+  /* --------------------todos-------------------- */
   useEffect(() => {
     dispatch(getData());
   }, [dispatch]);
-  console.log(todos);
-
-  const todo = todos.find((todo) => todo.id === +id);
 
   const [isEdit, setIsEdit] = useState(false);
+  const [newContent, setNewContent] = useState("");
 
-  const toggleEdit = () => {
-    setIsEdit(!isEdit);
+  const editHandler = () => {
+    setIsEdit(true);
   };
 
-  /* comment 데이터 관련 */
-  const [inputs, setInputs] = useState({
-    user: "",
-    body: "",
-  });
-  const { user, body } = inputs;
-
-  const onChange = (e) => {
-    const { value, name } = e.target;
-    setInputs({ ...inputs, [name]: value });
-  };
-
-  const onSubmit = (e) => {
-    e.preventDefault();
-    if (inputs.user.trim() === "" || inputs.body.trim() === "") {
-      window.alert("작성자와 댓글내용을 입력해주세요.");
-    }
-
+  const contentUpdateHandler = () => {
     dispatch(
-      __addComments({
-        ...inputs,
-        id,
+      updateData({
+        id: todo.id,
+        author: todo.author,
+        title: todo.title,
+        content: newContent,
       })
     );
-    setInputs({
-      user: "",
-      body: "",
-    });
+    setIsEdit(false);
   };
-  console.log("inputs:", inputs);
 
   return (
     <>
       <Header />
-      <BaseContainer>
-        <TodoDetailWrapWidth>
-          <DivInnerBox padding="1px" size="2em">
-            <FaSlackHash top="3px" /> {id}
-          </DivInnerBox>
-          <TodoDetailBtn
-            onClick={() => nav("/todolist")}
-            margin="5px"
-            padding="10px"
-            font="1.5em">
-            <FaReply />
-          </TodoDetailBtn>
-        </TodoDetailWrapWidth>
-        <TodoDetailWrapHeight>
-          <HomeH1 font="1.7em" color="white">
-            {todo?.author}
-          </HomeH1>
-          <HomeH1 size="1.5em" color="white">
-            {todo?.title}
-          </HomeH1>
-          {/* content <-> textarea */}
-          {isEdit == true ? (
-            <DivTextArea placeholder={todo?.content} />
-          ) : (
-            <DivContent>{todo?.content}</DivContent>
-          )}
+      <TodoDetailWrapWidth>
+        <DivInnerBox padding="10px" size="1.5em">
+          id : {+id}
+        </DivInnerBox>
+        <TodoDetailBtn
+          onClick={() => nav("/todolist")}
+          margin="5px"
+          padding="10px"
+          font="1.5em">
+          이전으로
+        </TodoDetailBtn>
+      </TodoDetailWrapWidth>
 
-          <TodoDetailBtn
-            width="95%"
-            margin="10px"
-            padding="10px"
-            font="1em"
-            onClick={() => toggleEdit()}>
-            수정하기
-          </TodoDetailBtn>
-        </TodoDetailWrapHeight>
-
-        {/* 모달 ? 보이기? */}
-        <div className="commentModal isnotActive">
-          {/* <HomeH1 font="1.7em">댓글창</HomeH1>
-          <CommentForm onSubmit={onSubmit}>
-            <CommentInputbox>
-              <CommentInput
-                type="text"
-                width="150px"
-                padding="5px"
-                height="30px"
-                name="user"
-                value={user}
-                onChange={onChange}
-              />
-              <CommentInput
-                type="text"
-                width="1000px"
-                padding="5px"
-                height="30px"
-                name="body"
-                value={body}
-                onChange={onChange}
-              />
-            </CommentInputbox>
-
-            <TodoDetailBtn
-              width="100%"
-              height="42px"
-              padding="auto"
-              margin="auto">
-              추가하기
-            </TodoDetailBtn>
-          </CommentForm>
-
-          <CommentList>
-            <CommentBoxWarp>
-              <CommentBox width="100%" padding="10px">
-                {comments?.map((comment) => (
-                  <TodoDetailList key={comment.postId} comment={comment} />
-                ))}
-              </CommentBox>
-            </CommentBoxWarp>
-          </CommentList> */}
+      <TodoDetailWrapHeight>
+        <HomeH1 font="1.7em">{todo?.author}</HomeH1>
+        <div padding="20px" size="1.5em" width="90%" height="200px">
+          {todo?.title}
         </div>
-      </BaseContainer>
+        {isEdit ? (
+          <>
+            <DivTextArea
+              value={newContent}
+              onChange={(e) => setNewContent(e.target.value)}
+              padding="20px"
+              size="1.5em"
+              width="90%"
+              height="200px"
+            />
+            <TodoDetailBtn
+              onClick={contentUpdateHandler}
+              width="95%"
+              margin="10px"
+              padding="10px"
+              font="1em">
+              저장하기
+            </TodoDetailBtn>
+          </>
+        ) : (
+          <>
+            <div padding="20px" size="1.5em" width="90%" height="200px">
+              {todo?.content}
+            </div>
+            <TodoDetailBtn
+              onClick={editHandler}
+              width="95%"
+              margin="10px"
+              padding="10px"
+              font="1em">
+              수정하기
+            </TodoDetailBtn>
+          </>
+        )}
+      </TodoDetailWrapHeight>
+
+      {/*  모달 ? 보이기? */}
+      <Comments id={id} />
     </>
   );
 };

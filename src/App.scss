@@ -6,6 +6,28 @@ body {
   background: #98a8f8;
 }
 
+/* ------------------------------------------------------------------------------------------------ */
+/* width / height */
+$max-width: 1200px;
+$min-width: 800px;
+
+/* color */
+$text-main: rgb(103, 124, 241);
+$text-white: #ffffff;
+$text-black: #000000;
+
+$bg-base: rgba(255, 255, 255, 0.95);
+$bg-main: rgb(103, 124, 241);
+$bg-trans: rgba(142, 157, 243, 0.226);
+
+/* border-radius */
+$rad-main: 15px;
+
+/* box-shadow */
+$shadow-base: 0 8px 32px 0 rgba(31, 38, 135, 0.61);
+
+/* ------------------------------------------------------------------------------------------------ */
+
 .commentModal {
   width: 800px;
   //height: 500px;
@@ -25,4 +47,13 @@ body {
     //
     display: none;
   }
+}
+
+.CommentContainer {
+  width: inherit;
+  height: 500px;
+  background-color: white;
+  border-radius: 0 15px 15px 0;
+  flex-direction: column;
+  display: inline;
 }
