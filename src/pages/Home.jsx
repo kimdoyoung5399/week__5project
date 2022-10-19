@@ -9,21 +9,29 @@ const Home = () => {
   return (
     <>
       <Header />
-      <HomeDiv>
+      <BaseContainer>
         <HomeH1>무엇을 할까요?</HomeH1>
-        <HomeBtn onClick={() => nav("/form")}>할일 기록하기</HomeBtn>
+        <HomeBtn onClick={() => nav("/form")}>Todo 기록하기</HomeBtn>
         <HomeBtn onClick={() => nav("/todolist")}>TodoList</HomeBtn>
-      </HomeDiv>
+      </BaseContainer>
     </>
   );
 };
 
 export default Home;
 
-const HomeDiv = styled.div`
-  margin: 10px;
-  display: flex;
-  flex-direction: column;
+const BaseContainer = styled.div`
+  max-width: 1200px;
+  min-width: 800px;
+  max-height: 100vh;
+  margin: 20px auto;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.61);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
 `;
 
 const HomeBtn = styled.button`
@@ -31,15 +39,17 @@ const HomeBtn = styled.button`
   height: 150px;
   margin: 20px;
   padding: 0 0 0 30px;
+  color: rgb(103, 124, 241);
   text-align: left;
+  font-weight: bold;
   font-size: 1.5em;
-  background-color: transparent;
-  border: 0.02em solid tomato;
+  background-color: rgba(142, 157, 243, 0.226);
+  border: none;
   border-radius: 10px;
-  color: #ff9574;
 `;
 
 const HomeH1 = styled.h1`
-  color: tomato;
-  padding: 60px;
+  margin-top: 30px;
+  padding: 0 30px;
+  color: rgb(103, 124, 241);
 `;

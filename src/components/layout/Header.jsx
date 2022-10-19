@@ -1,6 +1,7 @@
-import "../../App.css";
+import "../../App.scss";
 import React from "react";
 import styled from "styled-components";
+import { FaHome } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 const Header = () => {
@@ -8,7 +9,9 @@ const Header = () => {
 
   return (
     <HeaderDiv>
-      <HeaderText onClick={() => nav("/")}>Home</HeaderText>
+      <HeaderText onClick={() => nav("/")}>
+        <FaHome size="30" />
+      </HeaderText>
       <HeaderText>4조 ToDoList</HeaderText>
     </HeaderDiv>
   );
@@ -17,17 +20,19 @@ const Header = () => {
 export default Header;
 
 const HeaderDiv = styled.div`
-  display: flex;
-  gap: 20px;
+  margin-bottom: 5px;
   padding: 20px;
-  justify-content: space-between;
-  margin: 5px;
-  border: 1px solid tomato;
-  border-radius: 5px;
+  box-shadow: 0px 8px 8px 0 rgba(0, 0, 0, 0.61);
   position: sticky;
+  justify-content: space-between;
+  display: flex;
+`;
+
+const HomeButton = styled.span`
+  font-size: 19px;
 `;
 
 const HeaderText = styled.div`
-  color: tomato;
+  color: black;
   font-size: 1.5em;
 `;
