@@ -11,13 +11,15 @@ const TodoList = () => {
   const { todos, isLoading } = useSelector((state) => state.todos);
   const dispatch = useDispatch();
 
-  const dropItem = (id) => {
-    dispatch(deleteData(id));
-  };
-
   useEffect(() => {
     dispatch(getData());
   }, [dispatch]);
+
+  const deleteTodo = (todo) => {
+    console.log("todo:", todo.id);
+    const todoId = todo.id;
+    dispatch(deleteData(todoId));
+  };
 
   console.log(todos);
 
@@ -28,19 +30,21 @@ const TodoList = () => {
       {todos?.map((todo) => (
         <TodoListDiv key={todo.id}>
           <TodoListWarp>
-            <TodoListBox
-              onClick={() => nav(`/todolist/${todo.id}`)}
-              todos={todos}
-            >
+            <TodoListBox>
               <DivInnerWarp>
-                <DivInnerBox size="1.3em">{todo.content}</DivInnerBox>
-                <TodoListBtn size="1em" padding="10px" margin="10px">
-                  {todo.title}
+                <DivInnerBox size="1.3em">{todo.title}</DivInnerBox>
+                <TodoListBtn
+                  onClick={() => nav(`/todolist/${todo.id}`)}
+                  todos={todos}
+                  size="1em"
+                  padding="10px"
+                  margin="10px"
+                >
+                  상세보기
                 </TodoListBtn>
               </DivInnerWarp>
               <DivInnerBox size="1em">작성자 : {todo.author}</DivInnerBox>
-              <StButton onClick={() => dropItem(todo.id)}>삭제</StButton>
-              <StButton2>수정</StButton2>
+              <StButton onClick={() => deleteTodo(todo)}>삭제</StButton>
             </TodoListBox>
           </TodoListWarp>
         </TodoListDiv>
@@ -122,7 +126,7 @@ const StButton = styled.button`
   }
 `;
 
-const StButton2 = styled(StButton)`
-  margin-right: 5px !important;
-  background-color: #0bc041;
-`;
+// const StButton2 = styled(StButton)`
+//   margin-right: 5px !important;
+//   background-color: #0bc041;
+// `;
