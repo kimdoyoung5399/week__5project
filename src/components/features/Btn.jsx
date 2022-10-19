@@ -1,37 +1,59 @@
 import React, { memo } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-const Btn = (props) => {
-  /* label : button 이름, onClick : onClick, isDisabled : disabled, design : className */
-  const { label, onClick, isDisable } = props;
+const SIZES = {
+  sm: css`
+    --button-font-size: 0.875rem;
+    --button-padding: 8px 12px;
+    --button-readius: 4px;
+  `,
+  md: css`
+    --button-font-size: 1rem;
+    --button-padding: 12px 16px;
+    --button-readius: 8px;
+  `,
+  lg: css`
+    --button-font-size: 1.25rem;
+    --button-padding: 16px 20px;
+    --button-readius: 12px;
+  `,
+};
+
+const Btn = ({ size, disabled, children }) => {
+  const sizeStyle = SIZES[size];
+
   return (
-    <button onClick={onClick} disabled={isDisable}>
-      {label}
-    </button>
+    <StyleBtn sizeStyle={sizeStyle} disabled={disabled}>
+      {children}
+    </StyleBtn>
   );
 };
 
-export default memo(Btn);
+const StyleBtn = styled.button`
+  ${(p) => p.sizeStyle}
+  ${(p) => p.variantStyle}
 
-const DelBtn = styled.button`
-  width: 70px;
-  height: 30px;
-  margin-right: 10px;
-  margin-bottom: 60px;
-  padding: 8px;
-  font-size: 0.8rem;
-  color: #ffffff;
-  text-shadow: 1px 1px 0 rgba(0, 0, 0, 255);
-  background-color: #e73737;
-  box-shadow: 0 4px 9px 0 rgba(31, 38, 135, 0.37);
-  backdrop-filter: blur(9px);
-  -webkit-backdrop-filter: blur(9px);
+  margin: 0;
   border: none;
-  border-radius: 7px;
-  //justify-content: left;
-  display: inline;
+  cursor: pointer;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: var(--button-font-size, 1rem);
+  padding: var(--button-padding, 12px 16px);
+  border-radius: var(--button-radius, 8px);
+  color: var(--button-color, #ffffff);
+  background: var(--button-bg-color, #0d6efd);
 
-  :active {
-    box-shadow: inset 2px 2px 2px 2px #2424243e;
+  &:active,
+  &:hover,
+  &:focus {
+    background: var(--button-hover-bg-color, #025ce2);
+  }
+
+  &:disabled {
+    cursor: default;
+    opacity: 0.5;
+    background: var(--button-bg-color, #025ce2);
   }
 `;
+
+export default memo(Btn);

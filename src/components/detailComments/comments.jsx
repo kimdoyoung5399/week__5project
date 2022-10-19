@@ -13,8 +13,8 @@ const Comments = ({ id }) => {
   const { comments: data } = useSelector((state) => state.comments);
   const comments = data.filter((comment) => comment.todoId === +id);
 
-  const [user, onUserChange] = useInput("");
-  const [body, onBodyChange] = useInput("");
+  const [user, onUserChange, userReset] = useInput("");
+  const [body, onBodyChange, bodyReset] = useInput("");
 
   useEffect(() => {
     commentDispatch(__getComments());
@@ -34,6 +34,8 @@ const Comments = ({ id }) => {
         id: Date.now(),
       })
     );
+    userReset();
+    bodyReset();
   };
 
   return (

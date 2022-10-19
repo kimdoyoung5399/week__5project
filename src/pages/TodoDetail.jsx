@@ -13,6 +13,7 @@ const TodoDetail = () => {
 
   const { todos } = useSelector((state) => state.todos);
   const todo = todos.find((todo) => todo.id === +id);
+  console.log("todo:", todo);
 
   /* --------------------todos-------------------- */
   useEffect(() => {
@@ -20,7 +21,7 @@ const TodoDetail = () => {
   }, [dispatch]);
 
   const [isEdit, setIsEdit] = useState(false);
-  const [newContent, setNewContent] = useState("");
+  const [newContent, setNewContent] = useState(todo?.content);
 
   const editHandler = () => {
     setIsEdit(true);
@@ -29,9 +30,9 @@ const TodoDetail = () => {
   const contentUpdateHandler = () => {
     dispatch(
       updateData({
-        id: todo.id,
-        author: todo.author,
-        title: todo.title,
+        id: todo?.id,
+        author: todo?.author,
+        title: todo?.title,
         content: newContent,
       })
     );

@@ -6,6 +6,7 @@ import nextId from "react-id-generator";
 import { useDispatch } from "react-redux";
 import useInput from "../hooks/useInput";
 import { useNavigate } from "react-router-dom";
+import Btn from "../components/features/Btn";
 
 const Form = () => {
   const dispatch = useDispatch();
@@ -86,6 +87,7 @@ const Form = () => {
         </FormInputWrap>
         <FormBtnWrap>
           <FormBtn onClick={submitHandler}>작성하기</FormBtn>
+          <Btn size="sm">만능버튼</Btn>
         </FormBtnWrap>
       </FormWrap>
     </>
