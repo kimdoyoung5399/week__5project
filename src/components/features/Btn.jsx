@@ -3,9 +3,9 @@ import styled from "styled-components";
 
 const Btn = (props) => {
   /* label : button 이름, onClick : onClick, isDisabled : disabled, design : className */
-  const { label, onClick, isDisable } = props;
+  const { label, onClick, isDisable, className } = props;
   return (
-    <button onClick={onClick} disabled={isDisable}>
+    <button className={className} onClick={onClick} disabled={isDisable}>
       {label}
     </button>
   );

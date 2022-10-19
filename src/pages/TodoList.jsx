@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import "../App.scss";
 import styled from "styled-components";
 import { FaTrashAlt } from "react-icons/fa";
 import Header from "../components/layout/Header";

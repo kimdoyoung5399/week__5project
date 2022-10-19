@@ -1,6 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import "../../App.scss";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import { FcCollapse } from "react-icons/fc";
 import { __addComments } from "../../redux/modules/comment";
 import { __getComments } from "../../redux/modules/comment";
 import CommentsList from "./CommentsList";
@@ -16,9 +18,16 @@ const Comments = ({ id }) => {
   const [user, onUserChange] = useInput("");
   const [body, onBodyChange] = useInput("");
 
+  const [isActive, SetIsActive] = useState(false);
+
   useEffect(() => {
     commentDispatch(__getComments());
   }, [commentDispatch]);
+
+  const activeHandler = () => {
+    SetIsActive(!isActive);
+    console.log(isActive);
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -37,51 +46,85 @@ const Comments = ({ id }) => {
   };
 
   return (
-    <CommentContainer>
-      <HomeH1 font="1.7em">댓글창</HomeH1>
-      <CommentForm onSubmit={onSubmit}>
-        <CommentInputbox>
-          <CommentInput
-            type="text"
-            width="150px"
-            padding="5px"
-            height="30px"
-            name="user"
-            value={user}
-            onChange={onUserChange}
-          />
-          <CommentInput
-            type="text"
-            width="1000px"
-            padding="5px"
-            height="30px"
-            name="body"
-            value={body}
-            onChange={onBodyChange}
-          />
-        </CommentInputbox>
+    <div className={isActive == 1 ? "after" : "before"}>
+      <div className={isActive == 0} onClick={activeHandler}>
+        {isActive == 0 ? "댓글 창 열기" : "댓글 창 닫기"}
+      </div>
+      <div className="CommentContainer">
+        <HomeH1 font="1.7em" onClick={activeHandler}>
+          댓글창
+        </HomeH1>
+        <div>
+          <FcCollapse size="30px" onClick={activeHandler} />
+        </div>
+        <CommentForm onSubmit={onSubmit}>
+          <CommentInputbox>
+            <CommentInput
+              type="text"
+              width="150px"
+              padding="5px"
+              height="30px"
+              name="user"
+              value={user}
+              onChange={onUserChange}
+            />
+            <CommentInput
+              type="text"
+              width="1000px"
+              padding="5px"
+              height="30px"
+              name="body"
+              value={body}
+              onChange={onBodyChange}
+            />
+          </CommentInputbox>
 
-        <TodoDetailBtn width="100%" height="42px" padding="auto" margin="auto">
-          추가하기
-        </TodoDetailBtn>
-      </CommentForm>
+          <TodoDetailBtn
+            width="100%"
+            height="42px"
+            padding="auto"
+            margin="auto">
+            추가하기
+          </TodoDetailBtn>
+        </CommentForm>
 
-      <CommentListBox>
-        <CommentBoxWarp>
-          <CommentBox width="100%" padding="10px">
-            {comments
-              .filter((comment) => comment.todoId === +id)
-              .map((comment) => (
-                <CommentsList key={comment.id} comment={comment} />
-              ))}
-          </CommentBox>
-        </CommentBoxWarp>
-      </CommentListBox>
-    </CommentContainer>
+        <CommentListBox>
+          <CommentBoxWarp>
+            <CommentBox width="100%" padding="10px">
+              {comments
+                .filter((comment) => comment.todoId === +id)
+                .map((comment) => (
+                  <CommentsList key={comment.id} comment={comment} />
+                ))}
+            </CommentBox>
+          </CommentBoxWarp>
+        </CommentListBox>
+      </div>
+    </div>
   );
 };
 
 export default Comments;
+
+const CommentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  gap: 10px;
+  height: 400px;
+  transform: translateY(400px) 1s;
+`;
+const CommentBar = styled.div`
+  width: inherit;
+  height: 50px;
+  padding: auto 0;
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: $shadow-black;
+  flex-direction: column;
+  display: absolute;
+  bottom: 0;
+`;
 
 const HomeH1 = styled.h1`
   color: tomato;
@@ -102,13 +145,6 @@ const TodoDetailBtn = styled.button`
   color: #ff9574;
   width: ${({ width }) => width};
   height: ${({ height }) => height};
-`;
-
-const CommentContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin: 10px;
-  gap: 10px;
 `;
 
 const CommentForm = styled.form`
