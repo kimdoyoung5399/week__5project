@@ -1,11 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import "../../App.scss";
 import { useDispatch } from "react-redux";
-import {
-  __deleteComments,
-  __editComments,
-  __getComments,
-} from "../../redux/modules/comment";
+import { __deleteComments, __editComments } from "../../redux/modules/comment";
 
 const CommentsList = ({ comment }) => {
   const dispatch = useDispatch();
@@ -39,64 +36,78 @@ const CommentsList = ({ comment }) => {
   };
 
   return (
-    <div>
+    <>
       {isEdit ? (
-        <>
-          <input
+        <DivInnerBoxContainer>
+          <NewCommentInput
             type="text"
             value={newCommentBody}
             onChange={(e) => setNewCommentBody(e.target.value)}
-            padding="5px"
-            size="1em"
           />
           <CommentBtnWarp>
             <TodoDetailBtn onClick={cancelHandler}>취소</TodoDetailBtn>
             <TodoDetailBtn onClick={commentUpdateHandler}>저장</TodoDetailBtn>
           </CommentBtnWarp>
-        </>
+        </DivInnerBoxContainer>
       ) : (
-        <>
-          <DivInnerBox padding="5px" size="0.75em">
-            {comment?.user}
-          </DivInnerBox>
-          <DivInnerBox padding="5px" size="1em">
-            {comment?.body}
-          </DivInnerBox>
+        <DivInnerBoxContainer>
+          <DivInnerBoxWrap>
+            <DivInnerAuthor>{comment?.user}</DivInnerAuthor>
+            <div>{comment?.body}</div>
+          </DivInnerBoxWrap>
           <CommentBtnWarp>
             <TodoDetailBtn onClick={editHandler}>수정</TodoDetailBtn>
             <TodoDetailBtn onClick={deleteHandler}>삭제</TodoDetailBtn>
           </CommentBtnWarp>
-        </>
+        </DivInnerBoxContainer>
       )}
-    </div>
+    </>
   );
 };
 
 export default CommentsList;
 
-const DivInnerBox = styled.div`
-  padding: ${({ padding }) => padding};
-  font-size: ${({ size }) => size};
-  width: ${({ width }) => width};
-  height: ${({ height }) => height};
-  color: tomato;
+const DivInnerAuthor = styled.div`
+  font-size: 0.8em;
+  margin-bottom: 0.5em;
 `;
 
 const TodoDetailBtn = styled.button`
-  margin: ${({ margin }) => margin};
-  padding: ${({ padding }) => padding};
-  text-align: center;
-  font-size: ${({ font }) => font};
-  background-color: transparent;
-  border: 0.02em solid tomato;
-  border-radius: 10px;
-  color: #ff9574;
-  width: ${({ width }) => width};
-  height: ${({ height }) => height};
+  border: none;
+  border-radius: 5px;
+  color: black;
+  cursor: pointer;
+  &:hover {
+    background: rgb(103, 124, 241);
+    color: white;
+  }
 `;
 
 const CommentBtnWarp = styled.div`
   display: flex;
   flex-direction: row;
   gap: 10px;
+`;
+
+const DivInnerBoxContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1em;
+  padding: 0.8em;
+  border-radius: 5px;
+  box-shadow: 0em 0em 0.5em lightgray;
+  height: 2.5em;
+`;
+
+const NewCommentInput = styled.input`
+  height: 2.5em;
+  width: 85%;
+  padding-left: 0.5em;
+  border-radius: 5px;
+  border: 0.15em solid lightgray;
+`;
+
+const DivInnerBoxWrap = styled.div`
+  display: flex;
+  flex-flow: column;
 `;

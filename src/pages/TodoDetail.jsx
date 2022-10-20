@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../App.scss";
 import styled from "styled-components";
-import { FaReply } from "react-icons/fa";
-import { FaSlackHash } from "react-icons/fa";
 import Header from "../components/layout/Header";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
@@ -14,42 +12,36 @@ const TodoDetail = () => {
   const nav = useNavigate();
   const dispatch = useDispatch();
   const { id } = useParams();
-
   const { todos } = useSelector((state) => state.todos);
   const todo = todos.find((todo) => todo.id === +id);
 
   /* --------------------todos-------------------- */
-  useEffect(() => {
-    dispatch(getData());
-  }, [dispatch]);
-
   const [isEdit, setIsEdit] = useState(false);
-  const [newContent, setNewContent] = useState("");
-  const [isComment, setIsComment] = useState(false);
+  const [newContent, setNewContent] = useState(todo?.content);
 
   const editHandler = () => {
     setIsEdit(!isEdit);
   };
 
-  const commentHandler = () => {
-    setIsComment(!isComment);
-  };
-
   const contentUpdateHandler = () => {
     dispatch(
       updateData({
-        id: todo.id,
-        author: todo.author,
-        title: todo.title,
+        id: todo?.id,
+        author: todo?.author,
+        title: todo?.title,
         content: newContent,
       })
     );
     setIsEdit(false);
   };
 
+  useEffect(() => {
+    dispatch(getData());
+  }, [dispatch]);
+
   return (
     <div>
-      {isEdit == 1 ? (
+      {isEdit === true ? (
         /* 수정버튼 -> 모달창 (isEdit == true) */
         <div className="ContentsModalBg" onClick={editHandler}>
           <div className="ContentsModal">
@@ -62,60 +54,78 @@ const TodoDetail = () => {
               width="90%"
               height="200px"
             />
-            <Btn className="ex" onClick={contentUpdateHandler}>
-              Save
+            <Btn size="sm" onClick={contentUpdateHandler}>
+              저장하기
             </Btn>
           </div>
         </div>
       ) : (
-        <div>
-          <Header />
+        <DetailWrap>
           <BaseContainer>
-            <TodoDetailWrapWidth>
-              <DivInnerBox padding="10px" size="1.5em">
-                id: {+id}
-              </DivInnerBox>
-              <TodoDetailBtn
-                onClick={() => nav("/todolist")}
-                margin="5px"
-                padding="10px"
-                font="1.5em">
-                이전으로
-              </TodoDetailBtn>
-            </TodoDetailWrapWidth>
+            <Header />
+            <DetailCommentWrap>
+              <TodoDetailWrapWidth>
+                <DivInnerBox padding="10px" size="1.5em">
+                  id: {+id}
+                </DivInnerBox>
+                <TodoDetailBtn
+                  onClick={() => nav("/todolist")}
+                  margin="5px"
+                  padding="10px"
+                  font="1.5em"
+                >
+                  이전으로
+                </TodoDetailBtn>
+              </TodoDetailWrapWidth>
 
-            <TodoDetailWrapHeight>
-              <HomeH1 font="1.7em">{todo?.author}</HomeH1>
-              <div padding="20px" size="1.5em" width="90%" height="200px">
-                {todo?.title}
-              </div>
-              <div padding="20px" size="1.5em" width="90%" height="200px">
-                {todo?.content}
-              </div>
-              <TodoDetailBtn
-                onClick={editHandler}
-                width="95%"
-                margin="10px"
-                padding="10px"
-                font="1em">
-                수정하기
-              </TodoDetailBtn>
-            </TodoDetailWrapHeight>
-            <Comments id={id} />
+              <TodoDetailWrapHeight>
+                <DetailInnerWrap>
+                  <p font="1.7em">작성자: {todo?.author}</p>
+                  <DetailTitle>{todo?.title}</DetailTitle>
+                  <DetailContent
+                    padding="20px"
+                    size="1.5em"
+                    width="90%"
+                    height="200px"
+                  >
+                    {todo?.content}
+                  </DetailContent>
+                </DetailInnerWrap>
+                <FormBtnWrap>
+                  <Btn
+                    size="sm"
+                    width="95%"
+                    margin="10px"
+                    padding="10px"
+                    font="1em"
+                    onClick={editHandler}
+                  >
+                    수정하기
+                  </Btn>
+                </FormBtnWrap>
+              </TodoDetailWrapHeight>
+              <Comments id={id} />
+            </DetailCommentWrap>
           </BaseContainer>
-        </div>
+        </DetailWrap>
       )}
     </div>
   );
 };
 export default TodoDetail;
 
+const DetailWrap = styled.div`
+  display: flex;
+  align-items: center;
+  height: 100vh;
+`;
+
 const BaseContainer = styled.div`
   max-width: 1200px;
   min-width: 800px;
-  height: 65vh;
+  height: 620px;
   margin: 20px auto;
-  //padding: 10px;
+  padding: 10px;
   background-color: rgba(255, 255, 255, 0.95);
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.61);
   backdrop-filter: blur(16px);
@@ -127,32 +137,45 @@ const BaseContainer = styled.div`
   overflow: hidden;
 `;
 
+const DetailCommentWrap = styled.div`
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+`;
+
 const TodoDetailWrapWidth = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   padding: 1.5em 1em;
-  margin: 1em;
-  min-width: 95%;
+  width: 95%;
 `;
 const TodoDetailWrapHeight = styled.div`
-  height: 400px;
-  padding: 1.2em 1em;
-  background: rgb(103, 124, 241);
+  height: 300px;
+  margin: 0em 1em;
+  padding: 1.5em 2em;
+  background: white;
   border-radius: 15px;
-  box-shadow: 0.1rem 0.1rem 0.1rem 0.1rem #49494999;
-  align-items: center;
-  flex-direction: column;
+  box-shadow: 0rem 0rem 0.3rem 0.3rem #adadad99;
   display: flex;
+  flex-flow: column;
+  justify-content: space-between;
 `;
 
-const HomeH1 = styled.h1`
-  color: ${({ color }) => color}; //rgb(103, 124, 241);
-  padding: 10px;
-  justify-content: center;
-  width: 95%;
-  font-size: ${({ font }) => font};
+const DetailInnerWrap = styled.div`
+  width: 100%;
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+`;
+
+const DetailTitle = styled.h1`
+  margin: 1em 0em;
+`;
+
+const DetailContent = styled.p`
+  font-size: 20px;
 `;
 
 const DivInnerBox = styled.div`
@@ -164,21 +187,14 @@ const DivInnerBox = styled.div`
   color: rgb(103, 124, 241);
 `;
 
-const DivContent = styled.div`
-  padding: 10px;
-  font-size: 3rem;
-  width: ${({ width }) => width};
-  height: 200px;
-  color: white;
-`;
-
 const DivTextArea = styled.textarea`
-  width: 595px;
-  height: 250px;
-  font-size: 1.9rem;
-  border-radius: 15px 15px 0 0;
+  width: 95%;
+  height: 70%;
+  font-size: 1.5rem;
+  padding: 1rem;
+  border-radius: 5px;
+  box-shadow: 0em 0em 0.5em lightgray;
   border: none;
-  box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.8);
   color: black;
 
   &:focus {
@@ -187,72 +203,21 @@ const DivTextArea = styled.textarea`
 `;
 
 const TodoDetailBtn = styled.button`
-  margin: ${({ margin }) => margin};
-  padding: ${({ padding }) => padding};
-  text-align: center;
-  font-size: ${({ font }) => font};
-  background-color: transparent;
-  border-radius: 10px;
-  width: ${({ width }) => width};
-  height: ${({ height }) => height};
+  height: 2em;
+  background: #b7c2fb;
+  border: none;
+  font-size: 1em;
+  border-radius: 5px;
+  color: black;
+  cursor: pointer;
+  &:hover {
+    background: rgb(103, 124, 241);
+    color: white;
+  }
 `;
 
-const CommentContainer = styled.div`
-  width: inherit;
-  height: 500px;
-  background-color: white;
-  border-radius: 0 15px 15px 0;
-  flex-direction: column;
-  display: inline;
-`;
-
-const CommentForm = styled.form`
+const FormBtnWrap = styled.div`
   display: flex;
-  margin: 10px;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const CommentInputbox = styled.div`
-  display: flex;
-  gap: 10px;
-  margin: 10px;
-`;
-
-const CommentInput = styled.input`
-  width: ${({ width }) => width};
-  height: ${({ height }) => height};
-  padding: ${({ padding }) => padding};
-  border: 0.02em solid tomato;
-  border-radius: 10px;
-`;
-
-const CommentBoxWarp = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 15px;
-`;
-
-const CommentBox = styled.div`
-  margin: ${({ margin }) => margin};
-  padding: ${({ padding }) => padding};
-  font-size: ${({ size }) => size};
-  width: ${({ width }) => width};
-  height: ${({ height }) => height};
-  color: tomato;
-  border: 0.2px solid tomato;
-  border-radius: 10px;
-`;
-
-const CommentBtnWarp = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-`;
-
-const CommentList = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  justify-content: center;
+  margin-top: 10px;
 `;

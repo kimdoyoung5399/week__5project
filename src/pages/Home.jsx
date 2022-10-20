@@ -2,7 +2,9 @@ import React from "react";
 import "../App.scss";
 import Header from "../components/layout/Header";
 import styled from "styled-components";
+import "../App.scss";
 import { useNavigate } from "react-router-dom";
+import { FcTodoList, FcFile } from "react-icons/fc";
 
 const Home = () => {
   const nav = useNavigate();
@@ -10,23 +12,37 @@ const Home = () => {
   console.log(process.env.REACT_APP_HOST_URL);
 
   return (
-    <>
-      <Header />
+    <BaseWraper>
       <BaseContainer>
-        <HomeH1>무엇을 할까요?</HomeH1>
-        <HomeBtn onClick={() => nav("/form")}>Todo 기록하기</HomeBtn>
-        <HomeBtn onClick={() => nav("/todolist")}>TodoList</HomeBtn>
+        <Header />
+        <HomeBtnWrap>
+          <HomeBtn onClick={() => nav("/form")}>
+            <FcFile />
+            &nbsp;WRITING
+          </HomeBtn>
+          <HomeBtn onClick={() => nav("/todolist")}>
+            <FcTodoList />
+            &nbsp;TODOLIST
+          </HomeBtn>
+        </HomeBtnWrap>
       </BaseContainer>
-    </>
+    </BaseWraper>
   );
 };
 
 export default Home;
 
+const BaseWraper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+`;
+
 const BaseContainer = styled.div`
   max-width: 1200px;
   min-width: 800px;
-  max-height: 100vh;
+  height: 540px;
   margin: 20px auto;
   padding: 10px;
   background-color: rgba(255, 255, 255, 0.95);
@@ -37,22 +53,28 @@ const BaseContainer = styled.div`
   border: 1px solid rgba(255, 255, 255, 0.28);
 `;
 
+const HomeBtnWrap = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const HomeBtn = styled.button`
-  width: 95%;
-  height: 150px;
-  margin: 20px;
-  padding: 0 0 0 30px;
-  color: rgb(103, 124, 241);
+  width: 45%;
+  height: 350px;
+  margin: 40px 20px 10px 20px;
+  color: var($text-main);
   text-align: left;
   font-weight: bold;
   font-size: 1.5em;
   background-color: rgba(142, 157, 243, 0.226);
   border: none;
   border-radius: 10px;
-`;
-
-const HomeH1 = styled.h1`
-  margin-top: 30px;
-  padding: 0 30px;
-  color: rgb(103, 124, 241);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  &:hover {
+    border: 5px solid rgb(103, 124, 241);
+  }
 `;

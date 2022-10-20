@@ -20,7 +20,7 @@ const initialState = {
 
 export const getData = createAsyncThunk(
   "todos/getData",
-  async (payload, thunkAPI) => {
+  async (_, thunkAPI) => {
     try {
       const res = await axios.get(process.env.REACT_APP_HOST_URL + "/todos");
       //const todoData = res.data;
@@ -132,7 +132,6 @@ const todosSlice = createSlice({
     builder.addCase(postData.fulfilled, (state, action) => {
       state.todos.push(action.payload);
       state.isLoading = false;
-      alert("todo 추가가 완료되었습니다.");
       console.log("fulfilled : ", state);
     });
     builder.addCase(postData.rejected, (state) => {
@@ -165,7 +164,8 @@ const todosSlice = createSlice({
     });
     builder.addCase(deleteData.fulfilled, (state, action) => {
       state.isLoading = false;
-      state.todos = state.todos.filter((todo) => todo.id !== action.payload);
+      const idx = state.todos.findIndex((todo) => todo.id === action.payload);
+      state.todos.splice([idx], 1);
       console.log("fulfilled :", state);
     });
     builder.addCase(deleteData.rejected, (state) => {

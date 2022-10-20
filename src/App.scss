@@ -1,9 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+
 * {
+  font-family: 'Jua', sans-serif;
   user-select: none;
 }
 
 body {
-  background: #98a8f8;
+  background: rgb(255, 255, 255);
+    background: -moz-linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(152, 168, 248, 1) 70%);
+    background: -webkit-linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(152, 168, 248, 1) 70%);
+    background: linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(152, 168, 248, 1) 50%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffff", endColorstr="#98a8f8", GradientType=1);
 }
 
 /* ------------------------------------------------------------------------------------------------ */
@@ -30,24 +37,33 @@ $shadow-black: 0 8px 32px 0 rgba(0, 0, 0, 0.61);
 /* ------------------------------------------------------------------------------------------------ */
 
 .before {
+  background: white;
   position: absolute;
   bottom: 0px;
-  left: 0px;
-  height: 40px;
+  height: 50px;
+  border-radius: 1em;
+  box-shadow: 0em 0em 0.5em lightgray;
+  transition: height 1s;
 }
 
 .after {
+  background: white;
   position: absolute;
   bottom: 0px;
-  left: 0px;
-  height: 400px;
+  height: 430px;
+  border-radius: 1em;
+  box-shadow: 0em 0em 0.5em lightgray;
   transition: height 1s;
 }
+
 .CommentContainer {
   display: flex;
   flex-direction: column;
   margin: 10px;
   gap: 10px;
+  max-width: 1200px;
+  min-width: 800px;
+  padding: 20px;
   height: 400px;
   bottom: 0;
   transition: height 1s;
@@ -66,44 +82,28 @@ $shadow-black: 0 8px 32px 0 rgba(0, 0, 0, 0.61);
 }
 
 .ContentsModalBg {
-  top: 0;
-  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
-  position: absolute;
-  z-index: 100 !important;
-  //backdrop-filter: blur(4px);
+  background: rgb(255, 255, 255);
+    background: -moz-linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(152, 168, 248, 1) 70%);
+    background: -webkit-linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(152, 168, 248, 1) 70%);
+    background: linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(152, 168, 248, 1) 50%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffff", endColorstr="#98a8f8", GradientType=1);
 }
 
 .ContentsModal {
+  background: white;
   width: ($max-width / 2);
-  height: 400px;
-  margin: 15% auto;
-  background-color: $bg-base;
+  width: 30em;
+  height: 20em;
+  padding: 1em;
   border-radius: $rad-main;
   box-shadow: $shadow-black;
-}
-
-.ex {
-  width: 70px;
-  height: 30px;
-  margin-right: 10px;
-  margin-bottom: 60px;
-  padding: 8px;
-  font-size: 0.8rem;
-  color: #ffffff;
-  text-shadow: 1px 1px 0 rgba(0, 0, 0, 255);
-  background-color: #e73737;
-  box-shadow: 0 4px 9px 0 rgba(31, 38, 135, 0.37);
-  backdrop-filter: blur(9px);
-  -webkit-backdrop-filter: blur(9px);
-  border: none;
-  border-radius: 7px;
-  //justify-content: left;
-  display: inline;
-
-  :active {
-    box-shadow: inset 2px 2px 2px 2px #2424243e;
-  }
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+  align-items: center;
 }

@@ -12,7 +12,7 @@ const Header = () => {
       <HeaderText onClick={() => nav("/")}>
         <FaHome size="30" />
       </HeaderText>
-      <HeaderText>4조 ToDoList</HeaderText>
+      <HomeH1>TODOLIST</HomeH1>
     </HeaderDiv>
   );
 };
@@ -21,18 +21,22 @@ export default Header;
 
 const HeaderDiv = styled.div`
   margin-bottom: 5px;
-  padding: 20px;
-  box-shadow: 0px 8px 8px 0 rgba(0, 0, 0, 0.61);
+  padding: 10px 20px;
+  box-shadow: 0px 5px 5px lightgray;
   position: sticky;
   justify-content: space-between;
+  align-items: center;
   display: flex;
+  border-radius: 10px;
+  position: sticky;
 `;
 
-const HomeButton = styled.span`
-  font-size: 19px;
+const HomeH1 = styled.h1`
+  color: rgb(103, 124, 241);
 `;
 
 const HeaderText = styled.div`
-  color: black;
-  font-size: 1.5em;
+  color: rgb(103, 124, 241);
+  padding: 0;
+  cursor: pointer;
 `;
