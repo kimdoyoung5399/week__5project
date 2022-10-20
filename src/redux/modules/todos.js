@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+const BASE_URL = process.env.REACT_APP_TODOS_URL;
+
 // initialState
 const initialState = {
   todos: [
@@ -22,7 +24,7 @@ export const getData = createAsyncThunk(
   "todos/getData",
   async (_, thunkAPI) => {
     try {
-      const res = await axios.get(process.env.REACT_APP_HOST_URL + "/todos");
+      const res = await axios.get(BASE_URL);
       //const todoData = res.data;
       console.log(res);
       /* thunkAPI로 payload가 undefined가 뜰 수 있기 때문에 안전하게 직접 경로로 보내주자 */
@@ -40,10 +42,7 @@ export const postData = createAsyncThunk(
   "todos/postData",
   async (payload, thunkAPI) => {
     try {
-      const res = await axios.post(
-        process.env.REACT_APP_HOST_URL + "/todos",
-        payload
-      );
+      const res = await axios.post(BASE_URL, payload);
       console.log("post res:", res);
       /* thunkAPI로 payload가 undefined가 뜰 수 있기 때문에 안전하게 직접 경로로 보내주자 */
       return thunkAPI.fulfillWithValue(res.data);
@@ -61,10 +60,7 @@ export const updateData = createAsyncThunk(
   async (payload, thunkAPI) => {
     console.log("여기payload:", payload);
     try {
-      const res = await axios.patch(
-        process.env.REACT_APP_HOST_URL + `/todos/${payload.id}`,
-        payload
-      );
+      const res = await axios.patch(`${BASE_URL}/${payload.id}`, payload);
       console.log(res);
       /* thunkAPI로 payload가 undefined가 뜰 수 있기 때문에 안전하게 직접 경로로 보내주자 */
       return thunkAPI.fulfillWithValue(res.data);
@@ -81,7 +77,7 @@ export const deleteData = createAsyncThunk(
   "todos/deleteData",
   async (todoId, thunkAPI) => {
     try {
-      await axios.delete(process.env.REACT_APP_HOST_URL + `/todos/${todoId}`);
+      await axios.delete(`${BASE_URL}/${todoId}`);
       //const todoData = res.data;
       /* thunkAPI로 payload가 undefined가 뜰 수 있기 때문에 안전하게 직접 경로로 보내주자 */
       return thunkAPI.fulfillWithValue(todoId);
