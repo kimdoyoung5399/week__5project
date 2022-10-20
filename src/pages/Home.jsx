@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 const Home = () => {
   const nav = useNavigate();
 
+  console.log(process.env.REACT_APP_HOST_URL);
+
   return (
     <>
       <Header />

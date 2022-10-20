@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.1.2",
     "dotenv": "^16.0.3",
+    "heroku-cli": "^7.0.9",
     "immer": "^9.0.15",
     "json-server": "^0.17.0",
     "node-sass": "^7.0.3",
