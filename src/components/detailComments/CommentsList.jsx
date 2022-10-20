@@ -2,11 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import "../../App.scss";
 import { useDispatch } from "react-redux";
-import {
-  __deleteComments,
-  __editComments,
-  __getComments,
-} from "../../redux/modules/comment";
+import { __deleteComments, __editComments } from "../../redux/modules/comment";
 
 const CommentsList = ({ comment }) => {
   const dispatch = useDispatch();

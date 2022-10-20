@@ -150,7 +150,7 @@ const FormInput = styled.input`
   }
 `;
 
-const FormInputContent = styled.input`
+const FormInputContent = styled.textarea`
   width: 100%;
   height: 100px;
   margin-top: 10px;

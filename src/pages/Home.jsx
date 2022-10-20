@@ -9,6 +9,8 @@ import { FcTodoList, FcFile } from "react-icons/fc";
 const Home = () => {
   const nav = useNavigate();
 
+  console.log(process.env.REACT_APP_HOST_URL);
+
   return (
     <BaseWraper>
       <BaseContainer>

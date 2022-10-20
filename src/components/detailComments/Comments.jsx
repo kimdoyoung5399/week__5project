@@ -49,9 +49,9 @@ const Comments = ({ id }) => {
   };
 
   return (
-    <div className={isActive == 1 ? "after" : "before"}>
-      <CommentTitle className={isActive == 0} onClick={activeHandler}>
-        {isActive == 0 ? <p>댓글 창 열기</p> : <p>댓글 창 닫기</p>}
+    <div className={isActive === true ? "after" : "before"}>
+      <CommentTitle className={isActive === 0} onClick={activeHandler}>
+        {isActive === 0 ? <p>댓글 창 열기</p> : <p>댓글 창 닫기</p>}
         <MdSwapVert size="20px" onClick={activeHandler} />
       </CommentTitle>
       <>
