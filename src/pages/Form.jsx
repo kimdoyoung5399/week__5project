@@ -114,7 +114,7 @@ const BaseWrap = styled.div`
 const BaseContainer = styled.div`
   max-width: 1200px;
   min-width: 800px;
-  max-height: 100vh;
+  height: 540px;
   margin: 20px auto;
   padding: 10px;
   background-color: rgba(255, 255, 255, 0.95);
@@ -152,7 +152,7 @@ const FormInput = styled.input`
 
 const FormInputContent = styled.input`
   width: 100%;
-  height: 50px;
+  height: 100px;
   margin-top: 10px;
   font-size: 1.7rem;
   border-radius: 5px;
@@ -168,4 +168,5 @@ const FormInputContent = styled.input`
 const FormBtnWrap = styled.div`
   display: flex;
   justify-content: center;
+  margin-top: 10px;
 `;

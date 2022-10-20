@@ -8,17 +8,17 @@ const SIZES = {
     --button-readius: 4px;
   `,
   lg: css`
-    --button-font-size: 1.25rem;
+    --button-font-size: 0.875rem;
     --button-padding: 16px 20px;
     --button-readius: 12px;
   `,
 };
 
-const Btn = ({ size, disabled, children }) => {
+const Btn = ({ size, disabled, onClick, children }) => {
   const sizeStyle = SIZES[size];
 
   return (
-    <StyleBtn sizeStyle={sizeStyle} disabled={disabled}>
+    <StyleBtn sizeStyle={sizeStyle} disabled={disabled} onClick={onClick}>
       {children}
     </StyleBtn>
   );

@@ -32,35 +32,78 @@ $rad-main: 15px;
 
 /* box-shadow */
 $shadow-base: 0 8px 32px 0 rgba(31, 38, 135, 0.61);
+$shadow-black: 0 8px 32px 0 rgba(0, 0, 0, 0.61);
 
 /* ------------------------------------------------------------------------------------------------ */
 
-.commentModal {
-  width: 800px;
-  //height: 500px;
-  background-color: white;
-  border-radius: 15px 15px 15px 15px;
-  flex-direction: column;
-  display: flex;
-  transition: height 0.4s;
-  z-index: 100;
+.before {
+  background: white;
+  position: absolute;
+  bottom: 0px;
+  height: 50px;
+  border-radius: 1em;
+  box-shadow: 0em 0em 0.5em lightgray;
+  transition: height 1s;
+}
 
-  &.isActive {
-    height: 500px;
-    display: none;
-  }
-  &.isnotActive {
-    height: 50px;
-    //
-    display: none;
-  }
+.after {
+  background: white;
+  position: absolute;
+  bottom: 0px;
+  height: 430px;
+  border-radius: 1em;
+  box-shadow: 0em 0em 0.5em lightgray;
+  transition: height 1s;
 }
 
 .CommentContainer {
-  width: inherit;
-  height: 500px;
-  background-color: white;
-  border-radius: 0 15px 15px 0;
+  display: flex;
   flex-direction: column;
-  display: inline;
+  margin: 10px;
+  gap: 10px;
+  max-width: 1200px;
+  min-width: 800px;
+  padding: 20px;
+  height: 400px;
+  bottom: 0;
+  transition: height 1s;
+}
+
+.CommentBar {
+  width: inherit;
+  height: 50px;
+  padding: auto 0;
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: $shadow-black;
+  flex-direction: column;
+  display: absolute;
+  bottom: 0;
+}
+
+.ContentsModalBg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background: rgb(255, 255, 255);
+    background: -moz-linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(152, 168, 248, 1) 70%);
+    background: -webkit-linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(152, 168, 248, 1) 70%);
+    background: linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(152, 168, 248, 1) 50%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffff", endColorstr="#98a8f8", GradientType=1);
+}
+
+.ContentsModal {
+  background: white;
+  width: ($max-width / 2);
+  width: 30em;
+  height: 20em;
+  padding: 1em;
+  border-radius: $rad-main;
+  box-shadow: $shadow-black;
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+  align-items: center;
 }

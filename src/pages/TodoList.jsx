@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import "../App.scss";
 import styled from "styled-components";
 import { FaTrashAlt } from "react-icons/fa";
 import Header from "../components/layout/Header";
@@ -75,7 +76,7 @@ const ListWrap = styled.div`
 const BaseContainer = styled.div`
   max-width: 1200px;
   min-width: 800px;
-  max-height: 100vh;
+  height: 620px;
   margin: 20px auto;
   padding: 10px;
   background-color: rgba(255, 255, 255, 0.95);
@@ -87,7 +88,7 @@ const BaseContainer = styled.div`
 `;
 
 const TodoListContainer = styled.div`
-  max-height: 600px;
+  height: 25em;
   overflow: auto;
   &::-webkit-scrollbar {
     width: 8px;
@@ -103,7 +104,7 @@ const TodoListContainer = styled.div`
 
 const TodoListDiv = styled.div`
   max-height: 300px;
-  margin: 10px;
+  margin: 0em 1em 0.5em;
   display: flex;
   justify-content: center;
   flex-flow: column wrap;
@@ -111,7 +112,7 @@ const TodoListDiv = styled.div`
 
 const HomeH1 = styled.h1`
   color: rgb(103, 124, 241);
-  padding: 10px;
+  padding: 0.3em 1em 0em;
 `;
 
 const TodoListWarp = styled.div`
@@ -169,8 +170,3 @@ const StButton = styled.button`
     box-shadow: inset 2px 2px 2px 2px #2424243e;
   }
 `;
-
-// const StButton2 = styled(StButton)`
-//   margin-right: 5px !important;
-//   background-color: #0bc041;
-// `;
