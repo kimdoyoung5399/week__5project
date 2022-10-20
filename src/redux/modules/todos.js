@@ -22,7 +22,7 @@ export const getData = createAsyncThunk(
   "todos/getData",
   async (payload, thunkAPI) => {
     try {
-      const res = await axios.get("http://localhost:3001/todos");
+      const res = await axios.get(process.env.REACT_APP_HOST_URL + "/todos");
       //const todoData = res.data;
       console.log(res);
       /* thunkAPI로 payload가 undefined가 뜰 수 있기 때문에 안전하게 직접 경로로 보내주자 */
@@ -40,7 +40,10 @@ export const postData = createAsyncThunk(
   "todos/postData",
   async (payload, thunkAPI) => {
     try {
-      const res = await axios.post("http://localhost:3001/todos", payload);
+      const res = await axios.post(
+        process.env.REACT_APP_HOST_URL + "/todos",
+        payload
+      );
       console.log("post res:", res);
       /* thunkAPI로 payload가 undefined가 뜰 수 있기 때문에 안전하게 직접 경로로 보내주자 */
       return thunkAPI.fulfillWithValue(res.data);
@@ -59,7 +62,7 @@ export const updateData = createAsyncThunk(
     console.log("여기payload:", payload);
     try {
       const res = await axios.patch(
-        `http://localhost:3001/todos/${payload.id}`,
+        process.env.REACT_APP_HOST_URL + `/todos/${payload.id}`,
         payload
       );
       console.log(res);
@@ -78,7 +81,7 @@ export const deleteData = createAsyncThunk(
   "todos/deleteData",
   async (todoId, thunkAPI) => {
     try {
-      await axios.delete(`http://localhost:3001/todos/${todoId}`);
+      await axios.delete(process.env.REACT_APP_HOST_URL + `/todos/${todoId}`);
       //const todoData = res.data;
       /* thunkAPI로 payload가 undefined가 뜰 수 있기 때문에 안전하게 직접 경로로 보내주자 */
       return thunkAPI.fulfillWithValue(todoId);
